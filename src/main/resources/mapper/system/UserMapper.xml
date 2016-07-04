@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.publiccms.dao.system.UserDao">
+    <resultMap id="BaseResultMap" type="com.publiccms.domain.system.User">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="loginname" property="loginname" jdbcType="VARCHAR"/>
+        <result column="fullname" property="fullname" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="cell_phone" property="cellPhone" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="isdelete" property="isdelete" jdbcType="INTEGER"/>
+        <result column="role_id" property="roleId" jdbcType="INTEGER"/>
+        <result column="forbidden" property="forbidden" jdbcType="INTEGER"/>
+        <result column="last_login_at" property="lastLoginAt" jdbcType="INTEGER"/>
+        <result column="wrong_count" property="wrongCount" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+      id, loginname, fullname, email, cell_phone, forbidden, last_login_at, wrong_count
+    </sql>
+
+    <sql id="ListConditions">
+       <if test="vo.fullname != null and vo.fullname != ''">and (fullname like CONCAT('%',#{vo.fullname},'%') or loginname like CONCAT('%',#{vo.fullname},'%'))</if>
+    </sql>
+
+    <select id="selectListPage" resultMap="BaseResultMap" parameterType="map">
+        select
+        u.id, u.loginname, u.fullname, u.email, u.cell_phone, ur.role_id
+        from user u
+        INNER JOIN user_role ur ON ur.user_id = u.id
+        where u.isdelete = 0
+
+        <if test="user.fullname != null and user.fullname != ''">
+        	and (fullname like CONCAT('%',#{user.fullname},'%') or loginname like CONCAT('%',#{user.fullname},'%'))
+        </if>
+
+        <if test="user.roleId != null">
+        	and ur.role_id = #{user.roleId}
+        </if>
+
+        and u.loginname != 'admin'
+
+        order by u.${user.order} ${user.sort}
+    </select>
+
+    <select id="selectFyshByRoleCode" resultMap="BaseResultMap" parameterType="com.publiccms.domain.system.User">
+        SELECT
+        u.id,
+        u.loginname,
+        u.fullname
+        FROM user u, user_role ur
+        WHERE u.id=ur.user_id AND ur.role_id=r.id
+    </select>
+
+    <select id="selectByListPage" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List" />
+        from user where isdelete = 0
+        <include refid="ListConditions"/>
+        order by id desc
+    </select>
+
+    <select id="selectById" resultMap="BaseResultMap" >
+        select id, loginname, fullname, email, cell_phone, isdelete, forbidden, last_login_at, wrong_count
+        from user
+        where id = #{id}
+    </select>
+
+    <select id="selectByLoginname" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select id, loginname, fullname, email, cell_phone, password, forbidden, last_login_at, wrong_count
+        from user
+        where loginname = #{loginname} and isdelete = 0
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.publiccms.domain.system.User">
+        insert into user (id, loginname,
+          fullname, email, cell_phone, password
+          )
+        values (#{id}, #{loginname},
+          #{fullname}, #{email}, #{cellPhone}, #{password}
+          )
+    </insert>
+
+    <update id="updateById" parameterType="com.publiccms.domain.system.User">
+        update user
+        <set>
+            <if test="fullname !=null">
+                fullname = #{fullname},
+            </if>
+            <if test="email !=null">
+                email = #{email},
+            </if>
+            <if test="password !=null">
+                password = #{password},
+            </if>
+            <if test="cellPhone !=null">
+                cell_phone = #{cellPhone},
+            </if>
+            <if test="isdelete !=null">
+                isdelete = #{isdelete},
+            </if>
+            <if test="forbidden !=null">
+                forbidden = #{forbidden},
+            </if>
+            <if test="lastLoginAt !=null">
+                last_login_at = #{lastLoginAt},
+            </if>
+            <if test="wrongCount !=null">
+                wrong_count = #{wrongCount},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="selectRolePersonCount" parameterType="java.lang.Integer" resultType="java.lang.Long">
+        SELECT COUNT(*) FROM user_role ur
+        INNER JOIN USER u ON ur.user_id  = u.id AND u.isdelete = 0
+        WHERE ur.role_id = #{roldId} and u.loginname != 'admin'
+    </select>
+
+    <select id="selectCountUserByLoginname" parameterType="java.lang.String" resultType="java.lang.Long">
+        SELECT COUNT(*) FROM USER u WHERE u.loginname = #{loginname} AND u.isdelete = 0
+    </select>
+
+</mapper>

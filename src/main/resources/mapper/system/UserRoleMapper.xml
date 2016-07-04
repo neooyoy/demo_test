@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.publiccms.dao.system.UserRoleDao">
+    <resultMap id="BaseResultMap" type="com.publiccms.domain.system.UserRole">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="role_id" property="roleId" jdbcType="INTEGER"/>
+        <result column="creator" property="creator" jdbcType="INTEGER"/>
+        <result column="creator_name" property="creatorName" jdbcType="VARCHAR"/>
+        <result column="created_at" property="createdAt" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, user_id, role_id, creator, creator_name, created_at
+    </sql>
+
+    <sql id="Base_Conditions">
+        <if test="userId != null">and user_id = #{userId}</if>
+    </sql>
+
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from user_role
+        where id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.publiccms.domain.system.UserRole">
+        insert into user_role (id, user_id, role_id,
+        creator, creator_name, created_at
+        )
+        values (#{id}, #{userId}, #{roleId},
+        #{creator}, #{creatorName}, #{createdAt}
+        )
+    </insert>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        <![CDATA[
+		insert into user_role (id, user_id, role_id,
+          creator, creator_name, created_at
+          )
+        values
+		]]>
+        <foreach collection="list" item="item" index="index"
+                 separator=",">
+            (#{item.id}, #{item.userId}, #{item.roleId},
+            #{item.creator}, #{item.creatorName}, #{item.createdAt})
+        </foreach>
+    </insert>
+
+    <update id="updateByUserId" parameterType="com.publiccms.domain.system.UserRole">
+        update user_role
+        set
+          role_id = #{roleId}
+        where user_id = #{userId}
+    </update>
+
+    <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select * from user_role ur where ur.user_id = #{userId}
+    </select>
+
+</mapper>

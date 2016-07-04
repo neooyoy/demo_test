@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>wuyezulin.com</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="${jspath}/resources/login/js/jquery-2.js"></script>
+    <link href="${jspath}/resources/login/css/bootstrap-combined.css" rel="stylesheet" media="screen">
+    <link href="${jspath}/resources/login/css/ht_index.css" rel="stylesheet" media="screen">
+    <script type="text/javascript" src="${jspath}/resources/login/js/bootstrap.js"></script>
+    <script>
+        $(window).resize(function () {
+            $(".main_1000").css({
+                position: "absolute",
+                left: ($(window).width() - $(".main_1000").outerWidth()) / 2,
+                top: ($(window).height() - $(".main_1000").outerHeight()) / 2
+            });
+        });
+        $(function () {
+            if ($(window).width() > 768) {
+                $(window).resize();
+            }
+            var userAgent = navigator.userAgent;
+            if (userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1) {
+                $("#tips").text('不支持IE浏览器，请下载使用Chrome浏览器！')
+                $("#tips").attr('style', "color: red")
+            } else {
+                $("#tips").text('使用360浏览器，请调整到“极速模式”！推荐使用Chrome或Safari浏览器。')
+            }
+
+        });
+        function getverifycode() {
+            var img_src = '/kaptcha/getKaptchaImage.do?' + Math.floor(Math.random()*100);
+            $("#abimg").attr("src", img_src);
+        }
+
+
+        $(function () {
+            $("#hidepassword").focus(function () {
+                $(this).hide();
+                $("#exampleInputPassword3").val("").show().css("backgroundColor", "#fff").focus();
+            });
+            $("#exampleInputPassword3").blur(function () {
+                $(this).show().css("backgroundColor", "#fff");
+                $("#hidepassword").hide();
+            });
+
+            if ($('#abimg') != null && $('#abimg')[0] != null){
+                getverifycode();
+            }
+        });
+
+       /* function login(){
+            if ($('#userName').val().trim() == '' || $('#exampleInputPassword3').val().trim() == ''){
+                $('#message').css("display", '');
+                $('#message').html("请输入登录名和密码");
+                return false;
+            }
+        }*/
+    </script>
+</head>
+<body>
+<div style="position: absolute; left: 380px; top: 188.5px;" class="container-fluid main_1000">
+    <div class="row-fluid">
+        <div class="span12">
+            <h1 class="login_title">
+                写字楼管理后台
+            </h1>
+
+            <div class="row-fluid">
+                <div class="span6 login_box">
+                    <form class="form-inline" enctype="application/x-www-form-urlencoded"
+                          action="${base}/loginxiezilou"
+                          method="POST">
+                        <p class="table">
+                            <label for="userName">登录名</label>
+                            <input id="userName" name="loginname" required="" type="text" value="${loginname}">
+                        </p>
+
+                        <p class="table">
+                            <label>密码</label>
+                            <input id="hidepassword" type="password" value="">
+                            <input name="password" style="display:none;" id="exampleInputPassword3" type="password" value="${password}">
+                        </p>
+
+                        <input type="hidden" name="wrongCount" value="${wrongCount}">
+
+                        [#if "${showVerifycode}" == 1]
+                        <div id="verifycode" class="verify_box">
+                            <div class="float_inp">
+                                <input type="text" required="" class="verify" name="imgcode" placeholder="验证码">
+                            </div>
+                            <div class="float_box">
+                                <img onclick="getverifycode()" src="" id="abimg" class="image-verycode">
+                                <a class="changecode" style="cursor:pointer" onclick="getverifycode();">看不清，换一张</a>
+                            </div>
+                        </div>
+                        [/#if]
+
+                        <span style="color: red;font-size: 15px">${message}</span>
+
+                        <p class="login_btn">
+                            <button class="btn login_ht_btn" type="submit">登录</button>
+                        </p>
+
+                    </form>
+                </div>
+                <div class="span6 prompt">
+                    <p class="text-inter mb13">
+                        如果您忘记了密码，请联系管理员重置密码。
+                    </p>
+
+                    <p class="text-inter mb13">
+                        <em>Tips：</em> <span id="tips">使用360浏览器，请调整到“极速模式”！推荐使用Chrome或Safari浏览器。</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- [if It IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+<![endif]-->
+
+</body>
+</html>

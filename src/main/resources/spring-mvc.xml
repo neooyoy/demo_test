@@ -1,0 +1,55 @@
+<beans:beans xmlns:mvc="http://www.springframework.org/schema/mvc"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:tx="http://www.springframework.org/schema/tx"
+             xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+             xsi:schemaLocation="http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/data/jpa
+		http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <beans:import resource="conf/servlet-context.xml"/>
+
+    <!-- 访问拦截  -->
+    <mvc:interceptors>
+        <!--<mvc:interceptor>-->
+        <!--<mvc:mapping path="/**/**" />-->
+        <!--<mvc:exclude-mapping path="/resources/**" />-->
+        <!--<mvc:exclude-mapping path="/stat" />-->
+        <!--<mvc:exclude-mapping path="/errorpage/**" />-->
+        <!--<beans:bean class="com.uban.crm.interceptor.HTIPWhiteInterceptor" />-->
+        <!--</mvc:interceptor>-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**/**"/>
+            <mvc:exclude-mapping path="/resources/**"/>
+            <mvc:exclude-mapping path="/stat"/>
+            <mvc:exclude-mapping path="/errorpage/**"/>
+            <beans:bean class="com.publiccms.interceptor.system.LoginHandlerInterceptor"/>
+        </mvc:interceptor>
+       <!-- <mvc:interceptor>
+            <mvc:mapping path="/**/**"/>
+            <mvc:exclude-mapping path="/"/>
+            <mvc:exclude-mapping path="/stat"/>
+            <mvc:exclude-mapping path="/resources/**"/>
+            <mvc:exclude-mapping path="/errorpage/**"/>
+            <mvc:exclude-mapping path="/logout"/>
+            <mvc:exclude-mapping path="/login"/>
+            <mvc:exclude-mapping path="/foreGround/**"/>
+            <beans:bean class="com.publiccms.interceptor.system.AuthHandlerInterceptor"/>
+        </mvc:interceptor>-->
+        <!-- <mvc:interceptor>
+          <mvc:mapping path="/**/**"/>
+          <mvc:exclude-mapping path="/stat"/>
+          <mvc:exclude-mapping path="/plugins/**"/>
+          <mvc:exclude-mapping path="/ui/**"/>
+          <beans:bean class="com.uban.interceptor.system.XssHandlerInterceptor"/>
+      </mvc:interceptor> -->
+    </mvc:interceptors>
+
+
+
+</beans:beans>

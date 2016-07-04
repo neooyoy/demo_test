@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.publiccms.dao.office.OfficeImgsDao">
+    <resultMap id="officeimgsMap" type="com.publiccms.domain.office.OfficeImgs">
+          <id property="id" column="id"/>
+          <result property="officeId" column="office_id"/>
+          <result property="imgformat" column="imgformat"/>
+          <result property="imgpath" column="imgpath"/>
+          <result property="imgtype" column="imgtype"/>
+          <result property="is3d" column="is3d"/>
+          <result property="isdelete" column="isdelete"/>
+          <result property="createId" column="create_id"/>
+          <result property="createName" column="create_name"/>
+          <result property="createAt" column="create_at"/>
+          <result property="modifyId" column="modify_id"/>
+          <result property="modifyName" column="modify_name"/>
+          <result property="modifyAt" column="modify_at"/>
+          <result property="modifyActionid" column="modify_actionid"/>
+          <result property="waixingtuNum" column="waixingtuNum"/>
+          <result property="allNum" column="allNum"/>
+          <result property="name" column="name"/>
+          <result property="price" column="price"/>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.publiccms.domain.office.OfficeImgs">
+        insert into office_imgs (
+                  id,
+                  office_id,
+                  imgformat,
+                  imgpath,
+                  imgtype,
+                  is3d,
+                  isdelete,
+                  create_id,
+                  create_name,
+                  create_at,
+                  modify_id,
+                  modify_name,
+                  modify_at,
+                  modify_actionid
+              )
+        values (
+                  #{id},
+                  #{officeId},
+                  #{imgformat},
+                  #{imgpath},
+                  #{imgtype},
+                  #{is3d},
+                  #{isdelete},
+                  #{createId},
+                  #{createName},
+                  #{createAt},
+                  #{modifyId},
+                  #{modifyName},
+                  #{modifyAt},
+                  #{modifyActionid}
+              )
+    </insert>
+    <select id="selectById" resultMap="officeimgsMap" parameterType="java.lang.Integer">
+		select
+            oi.id,
+            oi.office_id,
+            oi.imgformat,
+            oi.imgpath,
+            oi.imgtype,
+            oi.is3d,
+            oi.isdelete,
+            oi.create_id,
+            oi.create_name,
+            oi.create_at,
+            oi.modify_id,
+            oi.modify_name,
+            oi.modify_at,
+            oi.modify_actionid
+	    from office_imgs oi
+	    where oi.id = #{id} 
+	</select>
+
+    <select id="findListByOfficeId" resultMap="officeimgsMap" parameterType="java.lang.Integer" >
+        select
+        oi.id,
+        oi.office_id,
+        oi.imgformat,
+        oi.imgpath,
+        oi.imgtype,
+        oi.is3d,
+        oi.isdelete,
+        oi.create_id,
+        oi.create_name,
+        oi.create_at,
+        oi.modify_id,
+        oi.modify_name,
+        oi.modify_at,
+        oi.modify_actionid,
+        oi.imgDesc
+        from office_imgs oi
+        where oi.office_id = #{officeId} and oi.isdelete=0
+        order by oi.id asc
+    </select>
+
+    <select id="selectByListPage" resultMap="officeimgsMap" parameterType="map">
+	    select
+            oi.id,
+            oi.office_id,
+            oi.imgformat,
+            oi.imgpath,
+            oi.imgtype,
+            oi.is3d,
+            oi.isdelete,
+            oi.create_id,
+            oi.create_name,
+            oi.create_at,
+            oi.modify_id,
+            oi.modify_name,
+            oi.modify_at,
+            oi.modify_actionid
+        from office_imgs oi 
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="vo.id != null">
+            	and id = #{vo.id}
+            </if>
+            <if test="vo.officeId != null">
+            	and office_id = #{vo.officeId}
+            </if>
+            <if test="vo.imgformat != null">
+            	and imgformat = #{vo.imgformat}
+            </if>
+            <if test="vo.imgpath != null">
+            	and imgpath = #{vo.imgpath}
+            </if>
+            <if test="vo.imgtype != null">
+            	and imgtype = #{vo.imgtype}
+            </if>
+            <if test="vo.is3d != null">
+            	and is3d = #{vo.is3d}
+            </if>
+            <if test="vo.isdelete != null">
+            	and isdelete = #{vo.isdelete}
+            </if>
+            <if test="vo.createId != null">
+            	and create_id = #{vo.createId}
+            </if>
+            <if test="vo.createName != null">
+            	and create_name = #{vo.createName}
+            </if>
+            <if test="vo.createAt != null">
+            	and create_at = #{vo.createAt}
+            </if>
+            <if test="vo.modifyId != null">
+            	and modify_id = #{vo.modifyId}
+            </if>
+            <if test="vo.modifyName != null">
+            	and modify_name = #{vo.modifyName}
+            </if>
+            <if test="vo.modifyAt != null">
+            	and modify_at = #{vo.modifyAt}
+            </if>
+            <if test="vo.modifyActionid != null">
+            	and modify_actionid = #{vo.modifyActionid}
+            </if>
+		</trim>
+		order by oi.id desc
+    </select>
+
+	<select id="listAll" resultMap="officeimgsMap" >
+		select
+            oi.id,
+            oi.office_id,
+            oi.imgformat,
+            oi.imgpath,
+            oi.imgtype,
+            oi.is3d,
+            oi.isdelete,
+            oi.create_id,
+            oi.create_name,
+            oi.create_at,
+            oi.modify_id,
+            oi.modify_name,
+            oi.modify_at,
+            oi.modify_actionid
+	    from office_imgs oi
+	</select>
+
+    <update id="updateById" parameterType="com.publiccms.domain.office.OfficeImgs">
+	    update office_imgs 
+			<set> 
+	        <if test="id != null">
+	          id = #{id},
+	        </if>
+	        <if test="officeId != null">
+	          office_id = #{officeId},
+	        </if>
+	        <if test="imgformat != null">
+	          imgformat = #{imgformat},
+	        </if>
+	        <if test="imgpath != null">
+	          imgpath = #{imgpath},
+	        </if>
+	        <if test="imgtype != null">
+	          imgtype = #{imgtype},
+	        </if>
+	        <if test="is3d != null">
+	          is3d = #{is3d},
+	        </if>
+	        <if test="isdelete != null">
+	          isdelete = #{isdelete},
+	        </if>
+	        <if test="createId != null">
+	          create_id = #{createId},
+	        </if>
+	        <if test="createName != null">
+	          create_name = #{createName},
+	        </if>
+	        <if test="createAt != null">
+	          create_at = #{createAt},
+	        </if>
+	        <if test="modifyId != null">
+	          modify_id = #{modifyId},
+	        </if>
+	        <if test="modifyName != null">
+	          modify_name = #{modifyName},
+	        </if>
+	        <if test="modifyAt != null">
+	          modify_at = #{modifyAt},
+	        </if>
+	        <if test="modifyActionid != null">
+	          modify_actionid = #{modifyActionid},
+	        </if>
+            <if test="imgDesc !=null">
+                imgDesc = #{imgDesc},
+            </if>
+	        </set>
+	    where id = #{id}
+	</update>
+
+	<delete id="deleteById" parameterType="java.lang.Integer">
+        delete from office_imgs
+        where id = #{id}
+    </delete>
+
+    <select id="selectFabuTu" resultMap="officeimgsMap" parameterType="java.lang.Integer">
+        SELECT
+          IFNULL(SUM(IF(oimg.`imgtype`=1, 1, 0)), 0) waixingtuNum,
+          IFNULL(SUM(IF(oimg.`imgtype`=1 OR oimg.`imgtype`=2 OR oimg.`imgtype`=4 OR oimg.`imgtype`=5 , 1, 0)), 0) allNum
+        FROM office_imgs oimg WHERE oimg.`office_id` = #{id}
+    </select>
+    <select id="selectOfficeImg" resultMap="officeimgsMap">
+        SELECT
+          m.office_id,
+          o.name,
+          o.price,
+          m.imgpath 
+         FROM office o JOIN      
+        (SELECT *,MIN(id) FROM office_imgs c
+         GROUP BY c.office_id) m  ON o.id=m.office_id 
+         <trim prefix="where" prefixOverrides="and|or">
+          o.status=1 AND m.isdelete=0
+         <if test="vo.name!= null and vo.name!=''">
+           AND o.name LIKE CONCAT('%',#{vo.name},'%')
+        </if>
+        </trim>
+		ORDER BY o.priority ASC
+		LIMIT 9
+    </select>
+</mapper>

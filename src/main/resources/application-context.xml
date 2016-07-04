@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+	<!-- 支持异步任务 -->
+	<task:annotation-driven />
+
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	<!-- 定义受环境影响的变量 -->
+	<context:property-placeholder location="classpath:config.properties"
+		ignore-unresolvable="true" />
+
+	<context:component-scan base-package="com.publiccms">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<!-- 主数据源 -->
+	<bean id="masterDataSource" class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="${officebuilding.connection.url.master}" />
+		<property name="username" value="${officebuilding.connection.username.master}" />
+		<property name="password" value="${officebuilding.connection.password.master}" />
+		<property name="initialSize" value="${initialSize}" />
+		<property name="minIdle" value="${minIdle}" />
+		<property name="maxActive" value="${maxActive}" />
+		<property name="maxWait" value="60000" />
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+		<property name="validationQuery" value="SELECT 1" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="true" />
+		<property name="testOnReturn" value="false" />
+		<property name="poolPreparedStatements" value="false" />
+		<property name="maxPoolPreparedStatementPerConnectionSize"
+				  value="20" />
+		<property name="filters" value="wall,stat" />
+	</bean>
+	<bean id="wall" class="com.alibaba.druid.wall.WallFilter">
+		<property name="config" ref="wall-config" />
+	</bean>
+	<bean id="wall-config" class="com.alibaba.druid.wall.WallConfig">
+		<property name="multiStatementAllow" value="true" />
+	</bean>
+	<!-- 从数据源 -->
+	<bean id="slaveDataSource" class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="${officebuilding.connection.url.slave}" />
+		<property name="username" value="${officebuilding.connection.username.slave}" />
+		<property name="password" value="${officebuilding.connection.password.slave}" />
+		<property name="initialSize" value="${initialSize}" />
+		<property name="minIdle" value="${minIdle}" />
+		<property name="maxActive" value="${maxActive}" />
+		<property name="maxWait" value="60000" />
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+		<property name="validationQuery" value="SELECT 1" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="true" />
+		<property name="testOnReturn" value="false" />
+		<property name="poolPreparedStatements" value="false" />
+		<property name="maxPoolPreparedStatementPerConnectionSize"
+				  value="20" />
+		<property name="filters" value="wall,stat" />
+	</bean>
+
+	<bean id="multipleDataSource" class="com.publiccms.utils.MultipleDataSource">
+		<property name="defaultTargetDataSource" ref="slaveDataSource" />
+		<property name="targetDataSources">
+			<map>
+				<entry key="master" value-ref="masterDataSource" />
+				<entry key="slave" value-ref="slaveDataSource" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- 扫描配置文件 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="multipleDataSource" />
+		<property name="configLocation" value="classpath:conf/MapperConfig.xml" />
+		<property name="mapperLocations" value="classpath:mapper/**/*.xml"></property>
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+		<property name="basePackage" value="com.publiccms.dao" />
+		<property name="markerInterface" value="com.publiccms.mybatis.dao.BaseDao" />
+	</bean>
+
+	<bean id="transactionManager"
+		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="multipleDataSource" />
+	</bean>
+
+	<bean id="multipartResolver"
+		  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize">
+			<value>104857600</value>
+		</property>
+		<property name="maxInMemorySize">
+			<value>4096</value>
+		</property>
+		<property name="defaultEncoding">
+			<value>utf-8</value>
+		</property>
+	</bean>
+
+	<bean id="qiniuClient" class="com.publiccms.utils.QiniuClient" scope="singleton">
+		<constructor-arg name="accessKey"
+						 value="d4diJ7qKOrAZ21rs6kYf8ya57KUJNJCeEEcGDFbZ" />
+		<constructor-arg name="secretKey"
+						 value="V2aPqlxjb3kawjDU8LVWfj5n6Z_U6bVpgDTeSrjb" />
+		<constructor-arg name="bucket" value="xiaowangzhancms" />
+		<constructor-arg name="expires" value="311040000" />
+		<constructor-arg name="host" value="http://7xvsql.com1.z0.glb.clouddn.com/" />
+	</bean>
+
+	<bean id="qiniuUserClient" class="com.publiccms.utils.QiniuClient" scope="singleton">
+		<constructor-arg name="accessKey"
+						 value="d4diJ7qKOrAZ21rs6kYf8ya57KUJNJCeEEcGDFbZ" />
+		<constructor-arg name="secretKey"
+						 value="V2aPqlxjb3kawjDU8LVWfj5n6Z_U6bVpgDTeSrjb" />
+		<constructor-arg name="bucket" value="xiaowangzhancms" />
+		<constructor-arg name="expires" value="311040000" />
+		<constructor-arg name="host" value="http://7xvsql.com1.z0.glb.clouddn.com/" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="manyDataSourceAspect" class="com.publiccms.aspect.DataSourceAspect" />
+	<aop:config>
+		<aop:aspect id="c" ref="manyDataSourceAspect">
+			<aop:pointcut id="tx"
+						  expression="execution(* com.publiccms.dao..*.*(..))" />
+			<aop:before pointcut-ref="tx" method="before" />
+			<aop:after pointcut-ref="tx" method="after"/>
+		</aop:aspect>
+	</aop:config>
+
+
+
+	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+		<property name="config">
+			<bean class="com.google.code.kaptcha.util.Config">
+				<constructor-arg>
+					<props>
+						<prop key="kaptcha.border">yes</prop>
+						<prop key="kaptcha.border.color">105,179,90</prop>
+						<prop key="kaptcha.textproducer.font.color">blue</prop>
+						<prop key="kaptcha.image.width">125</prop>
+						<prop key="kaptcha.image.height">45</prop>
+						<prop key="kaptcha.textproducer.font.size">45</prop>
+						<prop key="kaptcha.session.key">code</prop>
+						<prop key="kaptcha.textproducer.char.length">4</prop>
+						<prop key="kaptcha.textproducer.font.names">宋体,楷体,微软雅黑</prop>
+					</props>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+
+
+<!--
+	<bean id="foreGroundController" class="com.publiccms.controller.foreground.ForeGroundController"></bean>
+
+	<bean id="simpleUrlHandlerMapping"
+		  class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/index">foreGroundController</prop>
+			</props>
+		</property>
+	</bean>-->
+
+	<!--<context:annotation-config/>-->
+
+	<!-- session共享功能 start -->
+	<!--<context:annotation-config/>
+	<bean class="com.uban.session.memcache.MemcacheHttpSessionConfiguration"/>
+
+	<bean id="memcacheRepository" class="com.uban.session.memcache.MemcacheOperationsSessionRepository">
+	</bean>
+	<bean id="cookieHttpSessionStrategy" class="org.springframework.session.web.http.CookieHttpSessionStrategy" >
+		<property name="cookieName" value="${cookieName}"></property>
+	</bean>
+	<bean class="org.springframework.session.web.http.SessionRepositoryFilter">
+		<constructor-arg ref="memcacheRepository" />
+		<property name="httpSessionStrategy" ref="cookieHttpSessionStrategy" />
+	</bean>-->
+	<!-- session共享功能 end -->
+
+
+	<!-- 实体映射 -->
+	<!--<bean id="packagesToScan" class="org.springframework.beans.factory.config.ListFactoryBean">
+		<property name="sourceList">
+			<list>
+				<value>com.yiyuwangluo.test.entity</value>
+			</list>
+		</property>
+	</bean>-->
+
+</beans>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.publiccms.dao.infrastructure.BusinessCircleDao">
+    <resultMap id="businesscircleMap" type="com.publiccms.domain.infrastructure.BusinessCircle">
+          <id property="businessCircleId" column="business_circle_id"/>
+          <result property="districtId" column="district_id"/>
+          <result property="businessCircleName" column="business_circle_name"/>
+          <result property="isDelete" column="is_delete"/>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="business_circle_id" parameterType="com.publiccms.domain.infrastructure.BusinessCircle">
+        insert into business_circle (
+                  business_circle_id,
+                  district_id,
+                  business_circle_name,
+                  is_delete
+              )
+        values (
+                  #{businessCircleId},
+                  #{districtId},
+                  #{businessCircleName},
+                  #{isDelete}
+              )
+    </insert>
+
+    <select id="selectById" resultMap="businesscircleMap" parameterType="java.lang.Integer">
+		select
+            bc.business_circle_id,
+            bc.district_id,
+            bc.business_circle_name,
+            bc.is_delete
+	    from business_circle bc
+	    where bc.business_circle_id = #{businessCircleId} 
+	</select>
+
+	<select id="selectByListPage" resultMap="businesscircleMap" parameterType="map">
+	    select
+            bc.business_circle_id,
+            bc.district_id,
+            bc.business_circle_name,
+            bc.is_delete
+        from business_circle bc 
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="vo.businessCircleId != null">
+            	and business_circle_id = #{vo.businessCircleId}
+            </if>
+            <if test="vo.districtId != null">
+            	and district_id = #{vo.districtId}
+            </if>
+            <if test="vo.businessCircleName != null">
+            	and business_circle_name = #{vo.businessCircleName}
+            </if>
+            <if test="vo.isDelete != null">
+            	and is_delete = #{vo.isDelete}
+            </if>
+		</trim>
+		order by bc.business_circle_id desc
+    </select>
+
+	<select id="listAll" resultMap="businesscircleMap" >
+		select
+            bc.business_circle_id,
+            bc.district_id,
+            bc.business_circle_name,
+            bc.is_delete
+	    from business_circle bc
+	</select>
+
+    <update id="updateById" parameterType="com.publiccms.domain.infrastructure.BusinessCircle">
+	    update business_circle 
+			<set> 
+	        <if test="businessCircleId != null">
+	          business_circle_id = #{businessCircleId},
+	        </if>
+	        <if test="districtId != null">
+	          district_id = #{districtId},
+	        </if>
+	        <if test="businessCircleName != null">
+	          business_circle_name = #{businessCircleName},
+	        </if>
+	        <if test="isDelete != null">
+	          is_delete = #{isDelete},
+	        </if>
+	        </set>
+	    where business_circle_id = #{businessCircleId}
+	</update>
+
+	<delete id="deleteById" parameterType="java.lang.Integer">
+        delete from business_circle
+        where business_circle_id = #{businessCircleId}
+    </delete>
+	
+	<select id="loadBusinessCircleList" resultMap="businesscircleMap" parameterType="java.lang.Integer">
+        select
+            bc.business_circle_id,
+            bc.business_circle_name
+	    from business_circle bc
+	    where bc.district_id = #{districtId}
+    </select>
+</mapper>

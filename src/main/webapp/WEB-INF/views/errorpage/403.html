@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html class="error-page">
+<head>
+    <title>写字楼</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+</head>
+<body>
+[#include "views/include/top.html"]
+<!--导航 begin-->
+[#include "views/include/include.html"]
+<!--导航 end-->
+
+<!--内容 begin-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="centering text-center error-container">
+                <div class="text-center">
+                    <h2 class="without-margin">抱歉 <span class="text-warning">403</span> error.</h2>
+                    <h4 class="text-warning">您是${user.roleName},${msg},若为多角色请切换角色。</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

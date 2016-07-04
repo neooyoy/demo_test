@@ -1,0 +1,89 @@
+﻿body{background: #f2f2f2;font-family: microsoft yahei,arial,verdana,helvetica,sans-serif}
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 , input, button, select, textarea{font-family: microsoft yahei,arial,verdana,helvetica,sans-serif}
+a{color: #4996ab; text-decoration: underline;}
+.mb13{margin-bottom: 13%;}
+.ml40{margin-left: 40px;}
+
+.main_1000{max-width: 1000px; padding: 50px 80px 80px; background: #fff; box-shadow: 1px 1px 3px rgba(0,0,0,0.1);border-bottom-left-radius: 5px;border-bottom-right-radius: 5px; border-top: 2px solid #4996ab;}
+.login_box,.prompt{padding-left: 5%; padding-right: 5%;}
+.system-box{min-height:350px;text-align:center;}
+/*.system-row{display: inline-block;margin: 5px 0;}
+.system-row a{text-decoration: none;}*/
+.system-box{list-style: none;padding:0;margin:0;}
+.system-box li{float: left;margin: 1%;text-align:center;word-wrap: break-word;border:1px solid #4996ab;background:#fff;border-radius:10px;font-weight:bold;}
+.system-box a{text-decoration: none;color: #7ab5d3;font-size:2em;}
+.system-box a:hover li{color:#4996ab;}
+
+.login_box{border-right: 1px solid #e5e5e6;}
+.login_title {text-align: center; font-size: 35px; line-height: 90px;}
+label{font-size: 20px; margin-bottom: 20px; }
+input[type="text"]:focus,input[type="password"]:focus{ box-shadow:none;}
+.table input[type="text"],.table input[type="password"]{width: 90%; height: 35px; line-height: 35px; font-size: 20px; border:none; border-bottom: 1px solid #ccc; border-radius: 0; box-shadow: none;}
+input[type="text"].verify{width: 107px; height: 42px; line-height: 42px; font-size: 18px; border: 1px solid #ccc;}
+
+/* 验证码 */
+.verify_box {width: 93%; overflow: hidden; margin-bottom: 30px;}
+.float_inp{float: left;}
+.float_box{float:right; text-align: center;}
+.float_box a{display: block; font-size: 12px;}
+.login_btn{width: 90%; text-align: center; }
+
+.login_ht_btn{width: 150px; height: 45px; font-size: 20px; color: #fff; border: none; border-radius: 6px; background: #4996ab; }
+.login_ht_btn_red{width: 150px; height: 45px; font-size: 20px; color: #fff; border: none; border-radius: 6px; background: #ff0000; }
+.btn:hover, .btn:focus, .btn:active, .btn.active, .btn.disabled, .btn[disabled]{color: #fff; background: #448b96}
+.login_ht_btn_red:hover, .login_ht_btn_red:focus, .login_ht_btn_red:active{color: #fff; background: #D11414}
+
+/* 提示消息 */
+p.text-inter{line-height: 30px; font-size: 20px; text-align:justify; text-justify: inter-ideograph;}
+.prompt a{font-size: 12px;}
+.change_password{float: right}
+.forget_password{display:block;}
+
+/* 修改密码 */
+.text-error{color: #f00; font-size: 12px;}
+.form-horizontal{margin:0 auto; text-align: left;}
+.form-horizontal .control-label{width: 90px; padding-left: 10px;}
+.form-horizontal .controls{margin-left: 120px;}
+.form-horizontal input{height: 30px; padding:0 6px; /*border: none; border-bottom: 1px solid #e5e5e6; border-radius: 0;*/ box-shadow: none; font-size: 12px;}
+.form-horizontal input:focus{box-shadow: none; border-color: #e5e5e6;}
+.form-horizontal input:placeholder {color: #e5e5e6;}
+
+.btn_con{text-align: center;}
+.btn_con .confrim_btn{width: 100px;height: 35px;border: none;background: #4e9cb3;color: #fff;font-size: 16px;border-radius: 6px;margin-right: 5px;}
+@media (min-width: 1200px){
+	.main_1000{width: 1000px;}
+	.form-horizontal{width: 560px; }
+}
+@media (min-width: 968px){
+	.main_1000{width: 90%;}
+	.system-box li{width:14.4%;}
+}
+@media (max-width: 767px){
+	.main_1000{padding-left: 0; padding-right: 0; border-top: none;padding: 0; box-shadow:none;}
+	.login_box{border-right: none;}
+	.prompt{text-align: center;}
+
+	.login_title{font-size: 45px;}
+	.table input[type="text"]{width: 100%; padding: 0;}
+	.verify_box{width: 100%;}
+	.login_btn{width: 100%;}
+
+	.text-inter{display: none;}
+	.change_password{float: left;}
+	.forget_password{display: inline-block; float: right;}
+
+	.form-horizontal{width: 100%;}
+	.form-horizontal .control-label{float: left; width: 60px; height: 30px; line-height: 30px; padding-left: 0px; font-size: 16px;}
+	.form-horizontal .controls{margin-left: 60px;}
+	.form-horizontal .controls .text-error{display: block;}
+	.form-horizontal input{width: 96%; padding: 0 2%;}
+
+	.system-box{min-height: inherit;}
+	.system-box li{width: 30%; font-size: 20px}
+}
+@media (max-width: 480px){
+	body{background-color: #fff;}
+	.login_box,.prompt{padding-left: 0; padding-right: 0;}
+	.login_title{margin-top: 40px; line-height: 30px; font-size: 26px;}
+	.login_ht_btn{width: 100%;}
+}

@@ -1,0 +1,247 @@
+[@override name="title" ]楼盘列表页[/@override]
+[@override name="css_or_script" ][/@override]
+[@override name="content"]
+<style>
+    .table thead tr th,.table tbody tr td{
+        word-wrap:break-word;
+        word-break:break-all;
+    }
+    .textbox,.textbox-text{max-width:100%;}
+</style>
+<div class="page-content">
+    <div class="panel">
+        <div class="panel-heading">
+            查询条件
+            <a href="#" class="font-14 text-blue pull-right" onclick="openAddBuildingPage()">创建新楼盘</a>
+
+        </div>
+        <div class="panel-body">
+            <form id="officeForm" method="post" action="javascript: reloadOfficeGrid()" onsubmit="reloadOfficeGrid()">
+
+                <div class="form-inline">
+
+                    <input type="hidden" id="cityIds" value="${user.cityPermissionsStr}">
+
+                    <select id="city_combox" combox="{
+                                                        id : 'city_combox',
+                                                        showAll : false,
+                                                        hidenDisabledValue:'城市'
+                                                     }"></select>
+
+                    <select id="district_combox" combox="{
+                                                        id : 'district_combox',
+                                                        hidenDisabledValue:'区域'
+                                                     }"></select>
+
+                    <select id="businesscircle_combox" combox="{
+                                                               id : 'businesscircle_combox',
+                                                               hidenDisabledValue:'商圈'
+                                                           }"></select>
+
+                    <div class="form-group">
+                        <input id="officeId" type="text" placeholder="请输入大楼ID" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <input id="officeName" type="text" placeholder="请输入楼盘名称" class="form-control">
+                    </div>
+
+                </div>
+
+                <div class="form-inline">
+
+                    <select id="managementLevel_combox" combox="{
+                                                            id : 'managementLevel_combox',
+                                                            value : 'id',
+                                                            text : 'name',
+                                                            hidenDisabledValue:'物业等级',
+                                                            data : [{
+                                                                        id : '甲级',
+                                                                        name : '甲级'
+                                                                    },{
+                                                                        id : '乙级',
+                                                                        name : '乙级'
+                                                                    },{
+                                                                        id : '普通',
+                                                                        name : '普通'
+                                                                    }]
+                                                         }"></select>
+
+                    <select id="investorType_combox" combox="{
+                                                            id : 'investorType_combox',
+                                                            value : 'id',
+                                                            text : 'name',
+                                                            hidenDisabledValue:'业主类型',
+                                                            data : [{
+                                                                        id : 1,
+                                                                        name : '大业主'
+                                                                    },{
+                                                                        id : 2,
+                                                                        name : '小业主'
+                                                                    },{
+                                                                        id : 3,
+                                                                        name : '大业主+小业主'
+                                                                    }]
+                                                         }"></select>
+
+                    <select id="status_combox" combox="{
+                                                            id : 'status_combox',
+                                                            value : 'id',
+                                                            text : 'name',
+                                                            hidenDisabledValue:'发布状态',
+                                                            data : [{
+                                                                        id : 0,
+                                                                        name : '未发布'
+                                                                    },{
+                                                                        id : 1,
+                                                                        name : '已发布'
+                                                                    }]
+                                                         }"></select>
+
+              <!--      <select id="lockdisk_combox" combox="{
+                                                            id : 'lockdisk_combox',
+                                                            value : 'id',
+                                                            text : 'name',
+                                                            hidenDisabledValue:'锁盘状态',
+                                                            data : [{
+                                                                        id : 0,
+                                                                        name : '未锁'
+                                                                    },{
+                                                                        id : 1,
+                                                                        name : '锁定'
+                                                                    }]
+                                                         }"></select>
+
+                    <div class="form-group inline-ms">
+                        <select name="isfull" id="isfull" class="form-control">
+                            <option value="" selected disabled class="hide">是否满租</option>
+                            <option value="">全部</option>
+                            <option value="1">未满租</option>
+                            <option value="2">满租</option>
+                            <option value="0">未知</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group inline-ms">
+                        <select name="lockChecked" id="lockChecked" class="form-control">
+                            <option value="" selected disabled class="hide">是否已核实锁盘</option>
+                            <option value="">全部</option>
+                            <option value="1">核实通过</option>
+                            <option value="2">核实不通过</option>
+                            <option value="0">未核实</option>
+                        </select>
+                    </div>-->
+
+                    <div class="form-group">
+                        <button type="button" id='btn_search' value="查询" class="btn btn-default">
+                            <i class="fa fa-search"></i>
+                            查询
+                        </button>
+
+                        <button type="button" value="清空" class="btn btn-default" id="btn_clean" onclick="clearSearchValue()">
+                            <i class="fa fa-clean"></i>
+                            清空
+                        </button>
+                    </div>
+
+                </div>
+
+            </form>
+            <hr/>
+            <div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="page-content">
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row negative-margin">
+
+                <table id="building_grid"
+                       datagrid="{
+                                id: 'building_grid',
+                                searchButtonId:'btn_search',
+                                searchParams:[
+                                    {
+                                        nodeId:'officeId',
+                                        paramName:'officeId'
+                                    },
+                                    {
+                                        nodeId:'officeName',
+                                        paramName:'name'
+                                    },
+                                    {
+                                        nodeId:'lockdisk_combox',
+                                        paramName:'lockflag'
+                                    },
+                                    {
+                                        nodeId:'city_combox',
+                                        paramName:'cityIds'
+                                    },{
+                                        nodeId:'district_combox',
+                                        paramName:'districtId'
+                                    },{
+                                        nodeId:'businesscircle_combox',
+                                        paramName:'circleId'
+                                    },{
+                                        nodeId:'managementLevel_combox',
+                                        paramName:'managementLevel'
+                                    },{
+                                        nodeId:'investorType_combox',
+                                        paramName:'investorType'
+                                    },{
+                                        nodeId:'status_combox',
+                                        paramName:'status'
+                                    },{
+                                        nodeId:'auditpersonName',
+                                        paramName:'auditpersonName'
+                                    },{
+                                        nodeId:'isfull',
+                                        paramName:'isfull'
+                                    },{
+                                        nodeId:'lockChecked',
+                                        paramName:'lockChecked'
+                                    }
+                                ],
+                                pageSize: 20,  //每页显示个数
+                                width: '100%',
+
+                                params:{
+                                    'sort' : 'desc',
+                                    'order': 'priority desc, modifyAt'
+                                },
+                                trTdentity: 'id',
+                                url: '${base}/officeController/findListPage',
+                                tHeadCols:[
+                                    { field: 'id', title: '楼盘编号', width: 150, align: 'center', sortable: true },
+                                    { field: 'name', title: '楼盘名称', width: 150, align: 'center', sortable: true , render: renderOfBuildingName
+                                    },
+                                    { field: 'districtName', title: '区域', width: 150, align: 'center', sortable: true },
+                                    { field: 'circleName', title: '商圈', width: 150, align: 'center', sortable: true },
+                                    { field: 'totalAreasize', title: '可租面积', width: 150, align: 'center', sortable: true },
+                                    { field: 'investorType', title: '业主类型', width: 150, align: 'center', sortable: true, render: renderOfInvestorType },
+                                    { field: 'status', title: '状态', width: 150, align: 'center', sortable: true,
+                                        render: renderOfBuildingStatus
+                                    },
+                                    { field: 'modifyAt', title: '更新时间', width: 150, align: 'center', sortable: true,
+                                        convert : dateMinuteToDate
+                                    },
+                                    { field: 'modifyName', title: '更新人', width: 150, align: 'center', sortable: true },
+                                    { field: 'priority', title: '显示顺序', width: 150, align: 'center', sortable: true, render: renderOfPriority }
+                                ]
+                              }">
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="${jspath}/resources/js/office/buildingDataGrid.js?${staticversion}"></script>
+[/@override]
+[@extends name="views/base.html"/]
+

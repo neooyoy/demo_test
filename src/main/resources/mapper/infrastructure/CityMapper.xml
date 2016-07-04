@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.publiccms.dao.infrastructure.CityDao">
+    <resultMap id="cityMap" type="com.publiccms.domain.infrastructure.City">
+          <id property="cityId" column="city_id"/>
+          <result property="cityName" column="city_name"/>
+          <result property="shortName" column="short_name"/>
+          <result property="pinyin" column="pinyin"/>
+          <result property="standardCode" column="standard_code"/>
+          <result property="domain" column="domain"/>
+          <result property="domainAlias" column="domain_alias"/>
+          <result property="databaseName" column="database_name"/>
+          <result property="provinceId" column="province_id"/>
+          <result property="scriptIndex" column="script_index"/>
+          <result property="displayOrder" column="display_order"/>
+          <result property="provinceScriptIndex" column="province_script_index"/>
+          <result property="googleAnalyticsCode" column="google_analytics_code"/>
+          <result property="createdBy" column="created_by"/>
+          <result property="createdByName" column="created_by_name"/>
+          <result property="createdTime" column="created_time"/>
+          <result property="modifiedBy" column="modified_by"/>
+          <result property="modifiedByName" column="modified_by_name"/>
+          <result property="modifiedTime" column="modified_time"/>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="city_id" parameterType="com.publiccms.domain.infrastructure.City">
+        insert into city (
+                  city_id,
+                  city_name,
+                  short_name,
+                  pinyin,
+                  standard_code,
+                  domain,
+                  domain_alias,
+                  database_name,
+                  province_id,
+                  script_index,
+                  display_order,
+                  province_script_index,
+                  google_analytics_code,
+                  created_by,
+                  created_by_name,
+                  created_time,
+                  modified_by,
+                  modified_by_name,
+                  modified_time
+              )
+        values (
+                  #{cityId},
+                  #{cityName},
+                  #{shortName},
+                  #{pinyin},
+                  #{standardCode},
+                  #{domain},
+                  #{domainAlias},
+                  #{databaseName},
+                  #{provinceId},
+                  #{scriptIndex},
+                  #{displayOrder},
+                  #{provinceScriptIndex},
+                  #{googleAnalyticsCode},
+                  #{createdBy},
+                  #{createdByName},
+                  #{createdTime},
+                  #{modifiedBy},
+                  #{modifiedByName},
+                  #{modifiedTime}
+              )
+    </insert>
+
+    <select id="selectById" resultMap="cityMap" parameterType="java.lang.Integer">
+		select
+            c.city_id,
+            c.city_name,
+            c.short_name,
+            c.pinyin,
+            c.standard_code,
+            c.domain,
+            c.domain_alias,
+            c.database_name,
+            c.province_id,
+            c.script_index,
+            c.display_order,
+            c.province_script_index,
+            c.google_analytics_code,
+            c.created_by,
+            c.created_by_name,
+            c.created_time,
+            c.modified_by,
+            c.modified_by_name,
+            c.modified_time
+	    from city c
+	    where c.city_id = #{cityId} 
+	</select>
+
+	<select id="selectByListPage" resultMap="cityMap" parameterType="map">
+	    select
+            c.city_id,
+            c.city_name,
+            c.short_name,
+            c.pinyin,
+            c.standard_code,
+            c.domain,
+            c.domain_alias,
+            c.database_name,
+            c.province_id,
+            c.script_index,
+            c.display_order,
+            c.province_script_index,
+            c.google_analytics_code,
+            c.created_by,
+            c.created_by_name,
+            c.created_time,
+            c.modified_by,
+            c.modified_by_name,
+            c.modified_time
+        from city c 
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="vo.cityId != null">
+            	and city_id = #{vo.cityId}
+            </if>
+            <if test="vo.cityName != null">
+            	and city_name = #{vo.cityName}
+            </if>
+            <if test="vo.shortName != null">
+            	and short_name = #{vo.shortName}
+            </if>
+            <if test="vo.pinyin != null">
+            	and pinyin = #{vo.pinyin}
+            </if>
+            <if test="vo.standardCode != null">
+            	and standard_code = #{vo.standardCode}
+            </if>
+            <if test="vo.domain != null">
+            	and domain = #{vo.domain}
+            </if>
+            <if test="vo.domainAlias != null">
+            	and domain_alias = #{vo.domainAlias}
+            </if>
+            <if test="vo.databaseName != null">
+            	and database_name = #{vo.databaseName}
+            </if>
+            <if test="vo.provinceId != null">
+            	and province_id = #{vo.provinceId}
+            </if>
+            <if test="vo.scriptIndex != null">
+            	and script_index = #{vo.scriptIndex}
+            </if>
+            <if test="vo.displayOrder != null">
+            	and display_order = #{vo.displayOrder}
+            </if>
+            <if test="vo.provinceScriptIndex != null">
+            	and province_script_index = #{vo.provinceScriptIndex}
+            </if>
+            <if test="vo.googleAnalyticsCode != null">
+            	and google_analytics_code = #{vo.googleAnalyticsCode}
+            </if>
+            <if test="vo.createdBy != null">
+            	and created_by = #{vo.createdBy}
+            </if>
+            <if test="vo.createdByName != null">
+            	and created_by_name = #{vo.createdByName}
+            </if>
+            <if test="vo.createdTime != null">
+            	and created_time = #{vo.createdTime}
+            </if>
+            <if test="vo.modifiedBy != null">
+            	and modified_by = #{vo.modifiedBy}
+            </if>
+            <if test="vo.modifiedByName != null">
+            	and modified_by_name = #{vo.modifiedByName}
+            </if>
+            <if test="vo.modifiedTime != null">
+            	and modified_time = #{vo.modifiedTime}
+            </if>
+		</trim>
+		order by c.city_id desc
+    </select>
+
+	<select id="listAll" resultMap="cityMap" >
+		select
+            c.city_id,
+            c.city_name,
+            c.short_name,
+            c.pinyin,
+            c.standard_code,
+            c.domain,
+            c.domain_alias,
+            c.database_name,
+            c.province_id,
+            c.script_index,
+            c.display_order,
+            c.province_script_index,
+            c.google_analytics_code,
+            c.created_by,
+            c.created_by_name,
+            c.created_time,
+            c.modified_by,
+            c.modified_by_name,
+            c.modified_time
+	    from city c
+	</select>
+
+    <update id="updateById" parameterType="com.publiccms.domain.infrastructure.City">
+	    update city 
+			<set> 
+	        <if test="cityId != null">
+	          city_id = #{cityId},
+	        </if>
+	        <if test="cityName != null">
+	          city_name = #{cityName},
+	        </if>
+	        <if test="shortName != null">
+	          short_name = #{shortName},
+	        </if>
+	        <if test="pinyin != null">
+	          pinyin = #{pinyin},
+	        </if>
+	        <if test="standardCode != null">
+	          standard_code = #{standardCode},
+	        </if>
+	        <if test="domain != null">
+	          domain = #{domain},
+	        </if>
+	        <if test="domainAlias != null">
+	          domain_alias = #{domainAlias},
+	        </if>
+	        <if test="databaseName != null">
+	          database_name = #{databaseName},
+	        </if>
+	        <if test="provinceId != null">
+	          province_id = #{provinceId},
+	        </if>
+	        <if test="scriptIndex != null">
+	          script_index = #{scriptIndex},
+	        </if>
+	        <if test="displayOrder != null">
+	          display_order = #{displayOrder},
+	        </if>
+	        <if test="provinceScriptIndex != null">
+	          province_script_index = #{provinceScriptIndex},
+	        </if>
+	        <if test="googleAnalyticsCode != null">
+	          google_analytics_code = #{googleAnalyticsCode},
+	        </if>
+	        <if test="createdBy != null">
+	          created_by = #{createdBy},
+	        </if>
+	        <if test="createdByName != null">
+	          created_by_name = #{createdByName},
+	        </if>
+	        <if test="createdTime != null">
+	          created_time = #{createdTime},
+	        </if>
+	        <if test="modifiedBy != null">
+	          modified_by = #{modifiedBy},
+	        </if>
+	        <if test="modifiedByName != null">
+	          modified_by_name = #{modifiedByName},
+	        </if>
+	        <if test="modifiedTime != null">
+	          modified_time = #{modifiedTime},
+	        </if>
+	        </set>
+	    where city_id = #{cityId}
+	</update>
+
+	<delete id="deleteById" parameterType="java.lang.Integer">
+        delete from city
+        where city_id = #{cityId}
+    </delete>
+</mapper>

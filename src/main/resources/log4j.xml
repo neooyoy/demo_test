@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<!--common console output-->
+	<appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss,SSS} %p [%c] - %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="logfile" class="org.apache.log4j.RollingFileAppender">
+	    <param name="encoding" value="UTF-8"/>
+		<param name="File" value="${crm.root}/logs/system.log" />
+		<param name="MaxFileSize" value="102400KB" />
+		<param name="MaxBackupIndex" value="100" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss,SSS} %p [%c] - %m%n" />
+		</layout>
+	</appender>
+	
+	<!--SQL log-->
+    <appender name="sqlstdout" class="org.apache.log4j.ConsoleAppender">
+        <param name="encoding" value="UTF-8"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%m%n" />
+        </layout>
+    </appender>
+	
+	<!-- mybatis output sql -->
+	<appender name="IBatis" class="org.apache.log4j.ConsoleAppender"> 
+	    <param name="encoding" value="UTF-8"/> 
+        <layout class="org.apache.log4j.PatternLayout">  
+            <param name="ConversionPattern" value="%-4r [%t] %-5p %c %x - %m%n" />  
+        </layout>  
+        <filter class="org.apache.log4j.varia.LevelRangeFilter"> 
+        	<!-- LOG lowest level -->  
+            <param name="LevelMin" value="ERROR" />  
+            <!-- LOG highest level -->
+            <param name="LevelMax" value="FATAL" />  
+        </filter>  
+    </appender>  
+  
+    <logger name="com.ibatis" additivity="true">  
+        <level value="ERROR" />  
+    </logger>  
+  
+    <logger name="java.sql.Connection" additivity="true">  
+        <level value="ERROR" />  
+    </logger>  
+  
+    <logger name="java.sql.Statement" additivity="true">  
+        <level value="ERROR" />  
+    </logger>  
+  
+    <logger name="java.sql.PreparedStatement" additivity="true">  
+        <level value="ERROR" />  
+        <appender-ref ref="IBatis" />  
+    </logger>  
+  
+    <logger name="java.sql.ResultSet" additivity="true">  
+        <level value="ERROR" />  
+        <appender-ref ref="IBatis" />  
+    </logger>
+	
+	<!--SQL log-->
+	<logger name="rmsql" additivity="false">
+        <level value="ERROR"/>
+        <appender-ref ref="sqlstdout" />
+	</logger>
+	
+	<!--global log-->
+	<root>
+		<level value="WARN" />
+        <!--<level value="${log.level}" />-->
+		<appender-ref ref="stdout" />
+		<appender-ref ref="logfile" />
+	</root>
+</log4j:configuration>

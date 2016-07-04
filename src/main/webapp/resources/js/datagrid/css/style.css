@@ -1,0 +1,35 @@
+.gridData_tableFoot{
+    width: auto;height:24px;margin: 0px auto;line-height: 24px;
+}
+.gridData_tableFoot div{
+    width: auto;height :100%;margin-left: 5px;cursor: pointer;float: left
+}
+.tableBodyCur {
+    cursor: pointer
+}
+.lieStyle{
+    color: #205ed7 ;
+    border-color:#D4DBE1
+}
+thead td,tbody td{
+    /*border: 1px solid #D4DBE1;*//*这个是解决兼容IE浏览器的属性*/
+}
+.tableDataGridFoot {
+    border-collapse:collapse;
+}
+.theadStyle {
+    background-repeat: repeat-x ;
+}
+
+a.table_sort_desc {
+    background: url("../images/sort-desc.png") no-repeat scroll right;
+    padding: 0 7px 0 5px;
+    cursor:pointer;
+}
+
+a.table_sort_asc {
+    background: url("../images/sort-asc.png") no-repeat scroll right;
+    padding: 0 7px 0 5px;
+    cursor:pointer;
+}
+

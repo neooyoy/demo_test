@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <title>[@block name="title" ]写字楼[/@block]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+    [#include "views/include/include.html"]
+    [@block name="css_or_script" ]写字楼[/@block]
+</head>
+<body>
+<div>
+    [#include "views/include/top.html"]
+
+    <div id="wrapper">
+        [#include "views/include/nav.html"]
+        <!--BEGIN PAGE WRAPPER-->
+        <div id="page-wrapper">
+            [#include "views/include/left.html"]
+            [@block name="content" ][/@block]
+            <!--END CONTENT-->
+        </div>
+        <!--END PAGE WRAPPER-->
+    </div>
+</div>
+[@block name="body_script" ][/@block]
+</body>
+</html>

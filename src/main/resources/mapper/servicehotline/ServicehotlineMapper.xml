@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.publiccms.dao.servicehotline.ServicehotlineDao">
+    <resultMap id="servicehotlineMap" type="com.publiccms.domain.servicehotline.Servicehotline">
+          <id property="id" column="id"/>
+          <result property="phone" column="phone"/>
+          <result property="name" column="name"/>
+          <result property="createId" column="create_id"/>
+          <result property="createName" column="create_name"/>
+          <result property="createAt" column="create_at"/>
+          <result property="modifyId" column="modify_id"/>
+          <result property="modifyName" column="modify_name"/>
+          <result property="modifyAt" column="modify_at"/>
+           <result property="type" column="type"/>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.publiccms.domain.servicehotline.Servicehotline">
+        insert into servicehotline 
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+               <if test="id != null">
+                  id,
+               </if>
+               <if test="phone != null">
+                  phone,
+               </if>
+               <if test="name != null">
+                  name,
+               </if>
+                <if test="type != null">
+                  type,
+               </if>
+                  create_id,
+                  create_name,
+                  create_at,
+                  modify_id,
+                  modify_name,
+                  modify_at,
+            </trim>
+        	<trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">
+                  #{id},
+                </if>
+                <if test="phone != null">
+                  #{phone},
+                </if>
+                <if test="name != null">
+                  #{name},
+                </if>
+                   <if test="type != null">
+                  #{type},
+                </if>
+                  #{createId},
+                  #{createName},
+                  #{createAt},
+                  #{modifyId},
+                  #{modifyName},
+                  #{modifyAt},
+            </trim>
+    </insert>
+
+    <select id="selectById" resultMap="servicehotlineMap" parameterType="java.lang.Integer">
+		select
+            s.id,
+            s.phone,
+            s.name,
+            s.create_id,
+            s.create_name,
+            s.create_at,
+            s.modify_id,
+            s.modify_name,
+            s.modify_at
+	    from servicehotline s
+	    where s.id = #{id} 
+	</select>
+
+	<select id="selectByListPage" resultMap="servicehotlineMap" parameterType="map">
+	    select
+            s.id,
+            s.phone,
+            s.name,
+            s.create_id,
+            s.create_name,
+            s.create_at,
+            s.modify_id,
+            s.modify_name,
+            s.modify_at
+        from servicehotline s 
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="vo.id != null">
+            	and s.id = #{vo.id}
+            </if>
+            <if test="vo.phone != null">
+            	and s.phone = #{vo.phone}
+            </if>
+            <if test="vo.name != null">
+            	and s.name = #{vo.name}
+            </if>
+            <if test="vo.createId != null">
+            	and s.create_id = #{vo.createId}
+            </if>
+            <if test="vo.createName != null">
+            	and s.create_name = #{vo.createName}
+            </if>
+            <if test="vo.createAt != null">
+            	and s.create_at = #{vo.createAt}
+            </if>
+            <if test="vo.modifyId != null">
+            	and s.modify_id = #{vo.modifyId}
+            </if>
+            <if test="vo.modifyName != null">
+            	and s.modify_name = #{vo.modifyName}
+            </if>
+            <if test="vo.modifyAt != null">
+            	and s.modify_at = #{vo.modifyAt}
+            </if>
+		</trim>
+		order by s.id desc
+    </select>
+
+	<select id="listAll" resultMap="servicehotlineMap" >
+		select
+            s.id,
+            s.phone,
+            s.name,
+            s.create_id,
+            s.create_name,
+            s.create_at,
+            s.modify_id,
+            s.modify_name,
+            s.modify_at
+	    from servicehotline s
+	</select>
+
+    <update id="updateById" parameterType="com.publiccms.domain.servicehotline.Servicehotline">
+	    update servicehotline 
+			<set> 
+	        <if test="id != null">
+	          id = #{id},
+	        </if>
+	        <if test="phone != null">
+	          phone = #{phone},
+	        </if>
+	        <if test="name != null">
+	          name = #{name},
+	        </if>
+	        <if test="createId != null">
+	          create_id = #{createId},
+	        </if>
+	        <if test="createName != null">
+	          create_name = #{createName},
+	        </if>
+	        <if test="createAt != null">
+	          create_at = #{createAt},
+	        </if>
+	         <if test="type != null">
+	          type = #{type},
+	        </if>
+	          modify_id = #{modifyId},
+	          modify_name = #{modifyName},
+	          modify_at = #{modifyAt},
+	        </set>
+	    where id = #{id}
+	</update>
+
+	<delete id="deleteById" parameterType="java.lang.Integer">
+        delete from servicehotline
+        where id = #{id}
+    </delete>
+    
+    <select id="selectHotline" resultMap="servicehotlineMap" parameterType="java.lang.Integer">
+        select * from servicehotline h
+          where h.type = #{type}
+    </select>
+</mapper>

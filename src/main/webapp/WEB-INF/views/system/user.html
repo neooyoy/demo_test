@@ -1,0 +1,417 @@
+[@override name="title" ]用户管理[/@override]
+[@override name="css_or_script" ][/@override]
+[@override name="content"]
+
+<div class="page-content">
+    <div class="panel">
+        <div class="panel-heading">
+            查询条件
+        </div>
+
+        <input type="hidden" id="roleId" value="${roleId}">
+
+        <div class="panel-body">
+            <form id="userForm" method="post" action="javascript: search()" onsubmit="search()">
+                <div class="form-inline">
+                    <div class="form-group inline-ms">
+                        <input id="name" type="text" style="width: 150px !important;" class="form-control"
+                               placeholder="请输入登录名/中文名称" value="" name="val" id="val">
+                    </div>
+
+                    <div class="form-group inline-ms">
+                        <select id="roleId_select" class="form-control">
+                            <option value="" selected disabled class="hide">角色</option>
+                            <option value="">全部</option>
+                            <option value="0">普通用户</option>
+                            <option value="1">管理员</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="button" id='btn_search' onclick="search()" value="查询" class="btn btn-default">
+                            <i class="fa fa-search"></i>
+                            查询
+                        </button>
+
+                        <button type="button" value="清空" class="btn btn-default" id="btn_clean"
+                                onclick="clearSearchValue()">
+                            <i class="fa fa-clean"></i>
+                            清空
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="panel">
+        <div class="panel-heading">
+            用户列表
+            <a href="#" class="font-14 text-blue pull-right" onclick="openAddUserModal()">新增用户</a>
+        </div>
+
+        <input type="hidden" id="customerId" value="${customerId}">
+
+        <div class="page-content">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="row negative-margin">
+
+                        <table id="user_grid"
+                               datagrid="{
+                                id: 'user_grid',
+                                pageSize: 20,
+                                width: '100%',
+                                searchParams:[
+                                    {
+                                        nodeId:'name',
+                                        paramName:'fullname'
+                                    },
+                                    {
+                                        nodeId:'roleId_select',
+                                        paramName:'roleId'
+                                    }
+                                ],
+                                trTdentity: 'id',
+                                url: '${base}/system/getUserList',
+                                tHeadCols:[
+                                    { field: 'id', title: '用户编号', width: 150, align: 'center', sortable: true},
+                                    { field: 'loginname', title: '登录名', width: 150, align: 'center', sortable: true},
+                                    { field: 'fullname', title: '用户中文名', width: 150, align: 'center', sortable: true},
+                                    { field: 'roleId', title: '角色', width: 150, align: 'center', sortable: false, convert: getRoleName},
+                                    { field: '', title: '操作', width: 150, align: 'center', sortable: false, render: operateUser}
+                                ]
+                              }">
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModal-user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <span id="title"></span>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">
+                            ×
+                        </button>
+                    </div>
+
+                    <input type="hidden" id="userId" value="">
+
+                    <div class="panel-body">
+                        <div class="form-inline">
+                            <div class="form-group modal-open">
+                                <label class="pull-left"><span class="cal-group-title">角色</span><span
+                                        class="text-red">*</span>：</label>
+                                <select id="user_role" class="form-control pull-left"
+                                        level="1"
+                                        id="Sel-invalid" style="width: 340px !important">
+                                    <option value="0" selected>普通用户</option>
+                                    <option value="1">管理员</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-inline moreInvalidDiv">
+                            <div class="form-group modal-open">
+                                <label class="pull-left"><span class="cal-group-title">用户中文名</span><span
+                                        class="text-red">*</span>：</label>
+                                <input id="user_fullname" type="text" class="form-control" value=""
+                                       style="width: 340px !important"/>
+                            </div>
+                        </div>
+
+                        <div class="form-inline moreInvalidDiv">
+                            <div class="form-group modal-open">
+                                <label class="pull-left"><span class="cal-group-title">登录名</span><span
+                                        class="text-red">*</span>：</label>
+                                <input id="user_loginname" type="text" class="form-control" value=""
+                                       style="width: 340px !important"/>
+                            </div>
+                        </div>
+
+                        <div class="form-inline moreInvalidDiv">
+                            <div class="form-group modal-open">
+                                <label class="pull-left"><span class="cal-group-title">邮箱</span><span
+                                        class="text-red">*</span>：</label>
+                                <input id="email" type="text" class="form-control" style="width: 340px !important"/>
+                            </div>
+                        </div>
+
+                        <div class="form-inline moreInvalidDiv">
+                            <div class="form-group modal-open">
+                                <label class="pull-left"><span class="cal-group-title">手机</span><span
+                                        class="text-red">*</span>：</label>
+                                <input id="cellPhone" type="text" class="form-control" style="width: 340px !important"/>
+                            </div>
+                        </div>
+
+                        <div class="form-inline moreInvalidDiv">
+                            <div class="form-group modal-open">
+                                <label class="pull-left"><span class="cal-group-title">密码</span><span
+                                        class="text-red" id="psd_span">*</span>：</label>
+                                <input id="password" type="password" class="form-control"
+                                       style="width: 340px !important"/>
+                            </div>
+                        </div>
+
+                        <div class="form-inline moreInvalidDiv">
+                            <div class="form-group modal-open">
+                                <label class="pull-left"><span class="cal-group-title">确认密码</span><span
+                                        class="text-red" id="repsd_span">*</span>：</label>
+                                <input id="re_password" type="password" class="form-control"
+                                       style="width: 340px !important"/>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button type="button" class="btn btn-primary" id="btnOK"
+                                        onclick="comfirm()">确定
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var addOrModify = 0;
+
+    $(function () {
+        $('#user_loginname').val('');
+        $('#user_loginname').val('');
+
+        if ($('#roleId').val() != null) {
+            $('#roleId_select').val($('#roleId').val());
+        }
+
+        $.fn['user_grid'] = new dataGrid();
+        var gridOptions = getDataGridOptions("user_grid");
+
+        $("#user_grid")['user_grid'].init({
+            id: gridOptions.id,
+            searchParams: gridOptions.searchParams,
+            url: gridOptions.url,
+            tHeadCols: gridOptions.tHeadCols,
+            trTdentity: gridOptions.trTdentity,
+            order: "id"
+        });
+    })
+
+    function getRoleName(value) {
+        if (value == 0) {
+            return "普通用户";
+        } else if (value == 1) {
+            return "管理员";
+        }
+        return "";
+    }
+
+    //    data-toggle="modal"
+
+    function operateUser(record, value) {
+        return '<a href="#" class="btn btn-blue" onclick="openModifyUserModal(\'' + record.id + '\')">修改</a>' +
+                '&nbsp;&nbsp;<a href="#" class="btn btn-blue" onclick="deleteUser(\'' + record.id + '\')">删除</a>';
+    }
+
+    function search() {
+        $("#user_grid")['user_grid'].reload();
+    }
+
+    var clearSearchValue = function () {
+        $("#userForm")[0].reset();
+        search();
+    };
+
+
+    //    user_role  fullname loginname email cellPhone password re_password
+
+    function openAddUserModal() {
+        $('#title').html("新增用户");
+        addOrModify = 0;
+        $('#user_role').val(0);
+        $('#email').val('');
+        $('#cellPhone').val('');
+        $('#password').val('');
+        $('#re_password').val('');
+
+        $('#user_fullname').val('');
+        $('#user_loginname').val('');
+        $('#user_loginname').attr("disabled", false);
+
+        $('#repsd_span').css('display', '');
+        $('#psd_span').css('display', '');
+
+        $('#myModal-user').modal('show');
+    }
+
+    function openModifyUserModal(id) {
+        $('#title').html("修改用户");
+        addOrModify = 1;
+        var curRecord = $("#user_grid")['user_grid'].getCurSelectRecord(id);
+
+        $('#userId').val(id);
+
+        $('#user_role').val(curRecord.roleId);
+        $('#email').val(curRecord.email);
+        $('#cellPhone').val(curRecord.cellPhone);
+        $('#password').val('');
+        $('#re_password').val('');
+
+        $('#user_fullname').val(curRecord.fullname);
+        $('#user_loginname').val(curRecord.loginname);
+        $('#user_loginname').attr("disabled", true);
+
+        $('#repsd_span').css('display', 'none');
+        $('#psd_span').css('display', 'none');
+
+        $('#myModal-user').modal('show');
+    }
+
+    function comfirm() {
+        //新增
+        if (addOrModify == 0) {
+            if (!isRegisterUserName($('#user_loginname').val().trim())) {
+                alert('请输入正确的用户登录名：只能输入4-20个以字母开头、可带数字、"_"、"."');
+                return false;
+            }
+
+            if (!isTrueName($('#user_fullname').val().trim())) {
+                alert('请输入正确的用户中文名');
+                return false;
+            }
+
+            if (!isPhone($('#cellPhone').val().trim())) {
+                alert('请输入正确的手机号');
+                return false;
+            }
+
+            if (!isEmail($('#email').val().trim())) {
+                alert('请输入正确的邮箱');
+                return false;
+            }
+
+            if (!isPasswd($('#password').val().trim())) {
+                alert('请输入正确的密码: 只能输入6-20个字母、数字、下划线 ');
+                return false;
+            }
+
+            if ($('#password').val().trim() != $('#re_password').val().trim()) {
+                alert('两次输入的密码不一致，请重新输入 ');
+                return false;
+            }
+
+            $.post("${base}/system/addUser",
+                    {
+                        'roleId': $('#user_role').val(),
+                        'email': $('#email').val().trim(),
+                        'cellPhone': $('#cellPhone').val().trim(),
+                        'password': $('#password').val().trim(),
+                        'fullname': $('#user_fullname').val().trim(),
+                        'loginname': $('#user_loginname').val().trim()
+                    },
+                    function (result) {
+                        if (result.success) {
+                            alert(result.message);
+
+                            $('#myModal-user').modal('hide');
+
+                            search();
+                        } else {
+                            alert(result.message);
+                        }
+                    });
+        } else {//修改
+
+            if (!isTrueName($('#user_fullname').val().trim())) {
+                alert('请输入正确的用户中文名');
+                return false;
+            }
+
+            if (!isPhone($('#cellPhone').val().trim())) {
+                alert('请输入正确的手机号');
+                return false;
+            }
+
+            if (!isEmail($('#email').val().trim())) {
+                alert('请输入正确的邮箱');
+                return false;
+            }
+
+            if ($('#password').val().trim() != '' || $('#re_password').val().trim() != '') {
+                if (!isPasswd($('#password').val())) {
+                    alert('请输入正确的密码: 只能输入6-20个字母、数字、下划线 ');
+                    return false;
+                }
+
+                if ($('#password').val().trim() != $('#re_password').val().trim()) {
+                    alert('两次输入的密码不一致，请重新输入 ');
+                    return false;
+                }
+            }
+
+            $.post("${base}/system/modifyUser",
+                    {
+                        'id': $('#userId').val(),
+                        'roleId': $('#user_role').val(),
+                        'email': $('#email').val().trim(),
+                        'cellPhone': $('#cellPhone').val().trim(),
+                        'password': $('#password').val().trim(),
+                        'fullname': $('#user_fullname').val().trim(),
+                        'loginname': $('#user_loginname').val().trim()
+                    },
+                    function (result) {
+                        if (result.success) {
+                            alert(result.message);
+
+                            $('#myModal-user').modal('hide');
+
+                            search();
+                        } else {
+                            alert(result.message);
+                        }
+                    });
+        }
+    }
+
+    function deleteUser(id) {
+        if (confirm('确定要删除该用户吗？')) {
+            $.post("${base}/system/deleteUser",
+                    {
+                        'userId': id
+                    },
+                    function (result) {
+                        if (result.success) {
+                            alert(result.message);
+
+                            search();
+                        } else {
+                            alert(result.message);
+                        }
+                    });
+        }
+
+    }
+
+</script>
+
+[/@override]
+[@extends name="views/base.html"/]

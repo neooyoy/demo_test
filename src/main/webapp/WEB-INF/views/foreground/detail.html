@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>详情页</title>
+		<meta name="keywords" content=" " />
+		<meta name="description" content=" " />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="renderer" content="webkit">
+		<link rel="stylesheet" href="${jspath}/resources/foreground/css/idangerous.swiper.css" />
+		<link rel="stylesheet" href="${jspath}/resources/foreground/css/global.css" />
+	</head>
+	<body>
+		<div class="wrapper">
+			<div class="header">
+				<div class="container">
+					<h1 class="inline-block"><img class="mr15" src="${jspath}/resources/foreground/images/logo.jpg" width="161" height="36" /></h1>
+					<a class="text-link" href="${base}/">首页</a>
+					<a class="text-link" href="${base}/foreGround/list" target="_blank">写字楼出租</a>
+					<span class="flo-right mr35">24小时服务热线：<em class="text-red7">${servicehotlines.phone}</em></span>
+				</div>
+			</div>
+			
+			<div class="container mh20">
+				<div class="msg-wrap">
+					<h2 class="font28">${name}</h2>
+					<span class="font12 text-gray9">${artremark}</span>
+					<div class="clearfix mt25">
+						<img src="http://${pictureUrl}/${imgpath}${picLastDetail}" width="710" height="401" alt="" />
+						<div class="detail-cont">
+							<div class="detail-title mb30">
+								<span class="text-blue font20"><em class="font30">${price}</em>元/天/㎡</span>
+								<span class="ml35 font18">${circle_name}</span>
+							</div>
+							<div class="tc-wrap">
+								<p class="text-cont">
+									${description}
+								</p>
+							</div>
+							<div class="contact">
+								<p class="font30">${investor_contact}联系电话</p>
+								<p class="text-red7">${investor_contactphone}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="container bg-white mb20">
+				<div class="pv17">
+					<h2 class="detail-header">写字楼信息</h2>
+					<ul class="detail-info clearfix mb15">
+						<li>业主类型：${investor_type}</li>
+						<li>得房率：${construction_ratio}</li>
+						<li>建筑面积：${land_areasize}</li>
+						<li class="mr0">层数：${groundfloor}</li>
+						<li>物业等级：${management_level}</li>
+						<li>净层高：${floor_height}</li>
+						<li>物业：${management_company}</li>
+						<li class="mr0">物业费：${management_money}</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="container bg-white mb20">
+				<div class="pv17">
+					<h2 class="detail-header">相似楼盘</h2>
+					<ul class="similarity-office clearfix">
+						[#list newOfficeList as office]
+
+						[#if office_index==3]
+						<li class="mr0">
+						[#else]
+						<li>
+						[/#if]
+							<a href="${base}/foreGround/detail?id=${office.id}">
+								<img src="http://${pictureUrl}/${office.imgpath}${picLastList}" height="178" width="281" alt="" />
+								<span>${office.name} </span>
+							</a>
+						</li>
+						[/#list]
+					</ul>
+				</div>
+			</div>
+			
+			<div class="footer">
+				<!--<div class="footer-link">
+					<a href="#">关于我们</a>
+					<a href="#">联系我们</a>
+					<a href="#">工作机会</a>
+					<a href="#">人才招聘</a>
+				</div>-->
+				<p>
+					地址：${serviceadderss.name}<br />
+					京ICP证16032088号
+				</p>
+			</div>
+		</div>
+		<script type="text/javascript" src="${jspath}/resources/foreground/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="${jspath}/resources/foreground/js/idangerous.swiper.min.js"></script>
+		<script type="text/javascript" src="${jspath}/resources/foreground/js/base.js"></script>
+	</body>
+</html>

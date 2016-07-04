@@ -1,0 +1,88 @@
+<!-- <div id="wrapper"> -->
+<!--BEGIN SIDEBAR MENU-->
+<nav id="sidebar" role="navigation"
+     class="navbar-default navbar-static-side">
+    <div class="sidebar-collapse menu-scroll">
+        <ul id="side-menu" class="nav">
+            [#if "${user.roleId}" == "1"]
+            <li class="active">
+                <a>
+                    <i class="fa fa-system-management fa-fw">
+                        <div class="icon-bg bg-orange"></div>
+                    </i>
+                    <span class="menu-title">系统管理</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level collapse in">
+
+                    [#if "${active}" == "role"]
+                        <li class="active">
+                    [#else]
+                        <li>
+                    [/#if]
+
+                        <span class="circular-mark"></span>
+                        <a href="${base}/system/role">
+                            <div class="content-box">
+                                <span class="submenu-title">角色控制</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    [#if "${active}" == "user"]
+                        <li class="active">
+                    [#else]
+                        <li>
+                    [/#if]
+
+                        <span class="circular-mark"></span>
+                        <a href="${base}/system/user">
+                            <div class="content-box">
+                                <span class="submenu-title">用户控制</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    [#if "${active}" == "firstPage"]
+                    <li class="active">
+                        [#else]
+                    <li>
+                        [/#if]
+
+                    <a href="${base}/firtPageController/firstPage">
+                        <div class="content-box">
+                            <span class="submenu-title">首页管理</span>
+                        </div>
+                    </a>
+                </ul>
+            </li>
+            [/#if]
+
+            <li class="active">
+                <a>
+                    <i class="fa fa-property fa-fw">
+                        <div class="icon-bg bg-orange"></div>
+                    </i>
+                    <span class="menu-title">楼盘管理</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level collapse in" style="">
+                    [#if "${active}" == "office"]
+                        <li class="active">
+                    [#else]
+                        <li>
+                    [/#if]
+                        <span class="circular-mark"></span>
+                        <a href="${base}/officeController/officelist">
+                            <div class="content-box">
+                                <span class="submenu-title">楼盘列表</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+</nav>
+<!--END SIDEBAR MENU-->

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.publiccms.dao.infrastructure.DistrictDao">
+    <resultMap id="districtMap" type="com.publiccms.domain.infrastructure.District">
+          <id property="districtId" column="district_id"/>
+          <result property="districtName" column="district_name"/>
+          <result property="shortName" column="short_name"/>
+          <result property="pinyin" column="pinyin"/>
+          <result property="location" column="location"/>
+          <result property="cityId" column="city_id"/>
+          <result property="displayOrder" column="display_order"/>
+          <result property="createdBy" column="created_by"/>
+          <result property="createdByName" column="created_by_name"/>
+          <result property="createdTime" column="created_time"/>
+          <result property="modifiedBy" column="modified_by"/>
+          <result property="modifiedByName" column="modified_by_name"/>
+          <result property="modifiedTime" column="modified_time"/>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="district_id" parameterType="com.publiccms.domain.infrastructure.District">
+        insert into district (
+                  district_id,
+                  district_name,
+                  short_name,
+                  pinyin,
+                  location,
+                  city_id,
+                  display_order,
+                  created_by,
+                  created_by_name,
+                  created_time,
+                  modified_by,
+                  modified_by_name,
+                  modified_time
+              )
+        values (
+                  #{districtId},
+                  #{districtName},
+                  #{shortName},
+                  #{pinyin},
+                  #{location},
+                  #{cityId},
+                  #{displayOrder},
+                  #{createdBy},
+                  #{createdByName},
+                  #{createdTime},
+                  #{modifiedBy},
+                  #{modifiedByName},
+                  #{modifiedTime}
+              )
+    </insert>
+
+    <select id="selectById" resultMap="districtMap" parameterType="java.lang.Integer">
+		select
+            d.district_id,
+            d.district_name,
+            d.short_name,
+            d.pinyin,
+            d.location,
+            d.city_id,
+            d.display_order,
+            d.created_by,
+            d.created_by_name,
+            d.created_time,
+            d.modified_by,
+            d.modified_by_name,
+            d.modified_time
+	    from district d
+	    where d.district_id = #{districtId} 
+	</select>
+
+	 <select id="loadDistrictList" resultMap="districtMap" parameterType="java.lang.Integer">
+        select
+        d.district_id,
+        d.district_name
+        from district d
+        where d.city_id = #{cityId}
+        order by d.display_order asc
+    </select>
+	
+	<select id="selectByListPage" resultMap="districtMap" parameterType="map">
+	    select
+            d.district_id,
+            d.district_name,
+            d.short_name,
+            d.pinyin,
+            d.location,
+            d.city_id,
+            d.display_order,
+            d.created_by,
+            d.created_by_name,
+            d.created_time,
+            d.modified_by,
+            d.modified_by_name,
+            d.modified_time
+        from district d 
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="vo.districtId != null">
+            	and district_id = #{vo.districtId}
+            </if>
+            <if test="vo.districtName != null">
+            	and district_name = #{vo.districtName}
+            </if>
+            <if test="vo.shortName != null">
+            	and short_name = #{vo.shortName}
+            </if>
+            <if test="vo.pinyin != null">
+            	and pinyin = #{vo.pinyin}
+            </if>
+            <if test="vo.location != null">
+            	and location = #{vo.location}
+            </if>
+            <if test="vo.cityId != null">
+            	and city_id = #{vo.cityId}
+            </if>
+            <if test="vo.displayOrder != null">
+            	and display_order = #{vo.displayOrder}
+            </if>
+            <if test="vo.createdBy != null">
+            	and created_by = #{vo.createdBy}
+            </if>
+            <if test="vo.createdByName != null">
+            	and created_by_name = #{vo.createdByName}
+            </if>
+            <if test="vo.createdTime != null">
+            	and created_time = #{vo.createdTime}
+            </if>
+            <if test="vo.modifiedBy != null">
+            	and modified_by = #{vo.modifiedBy}
+            </if>
+            <if test="vo.modifiedByName != null">
+            	and modified_by_name = #{vo.modifiedByName}
+            </if>
+            <if test="vo.modifiedTime != null">
+            	and modified_time = #{vo.modifiedTime}
+            </if>
+		</trim>
+		order by d.district_id desc
+    </select>
+
+	<select id="listAll" resultMap="districtMap" >
+		select
+            d.district_id,
+            d.district_name,
+            d.short_name,
+            d.pinyin,
+            d.location,
+            d.city_id,
+            d.display_order,
+            d.created_by,
+            d.created_by_name,
+            d.created_time,
+            d.modified_by,
+            d.modified_by_name,
+            d.modified_time
+	    from district d
+	</select>
+
+    <update id="updateById" parameterType="com.publiccms.domain.infrastructure.District">
+	    update district 
+			<set> 
+	        <if test="districtId != null">
+	          district_id = #{districtId},
+	        </if>
+	        <if test="districtName != null">
+	          district_name = #{districtName},
+	        </if>
+	        <if test="shortName != null">
+	          short_name = #{shortName},
+	        </if>
+	        <if test="pinyin != null">
+	          pinyin = #{pinyin},
+	        </if>
+	        <if test="location != null">
+	          location = #{location},
+	        </if>
+	        <if test="cityId != null">
+	          city_id = #{cityId},
+	        </if>
+	        <if test="displayOrder != null">
+	          display_order = #{displayOrder},
+	        </if>
+	        <if test="createdBy != null">
+	          created_by = #{createdBy},
+	        </if>
+	        <if test="createdByName != null">
+	          created_by_name = #{createdByName},
+	        </if>
+	        <if test="createdTime != null">
+	          created_time = #{createdTime},
+	        </if>
+	        <if test="modifiedBy != null">
+	          modified_by = #{modifiedBy},
+	        </if>
+	        <if test="modifiedByName != null">
+	          modified_by_name = #{modifiedByName},
+	        </if>
+	        <if test="modifiedTime != null">
+	          modified_time = #{modifiedTime},
+	        </if>
+	        </set>
+	    where district_id = #{districtId}
+	</update>
+
+	<delete id="deleteById" parameterType="java.lang.Integer">
+        delete from district
+        where district_id = #{districtId}
+    </delete>
+</mapper>

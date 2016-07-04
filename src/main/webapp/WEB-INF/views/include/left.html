@@ -1,0 +1,27 @@
+<style type="text/css">
+	.font14{font-size: 14px !important;}
+	.versionUpdate-wrap{margin-left: -15px; margin-right: -15px; padding-left:15px; padding-right:15px; border-bottom:1px solid #e5e5e6}
+	.versionUpdate-content{position: relative;}
+	.versionUpdate-content .marks{position: absolute; width: 10px; height: 10px; left: -20px; top: 50%; margin-top: -5px; background-color: #28a4c9; border-radius: 50%;}
+	.updateEntry{float:right; font-size: 14px;}
+	.borLeft{border-left:1px solid #e5e5e6;}
+	.form-inline .form-group .cal-group-title{width:85px;}
+</style>
+<!-- 面包屑 -->
+<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+	<div class="page-header pull-left">
+		<div class="page-title">${currentMenu.menuName}</div>
+	</div>
+	<ol class="breadcrumb page-breadcrumb">
+		<li><i class="fa fa-home"></i>&nbsp;<a href="#">Home</a>&nbsp;&nbsp;<i class="fa fa-right"></i>&nbsp;&nbsp;</li>
+		<li>[#if currentMenu_type!=0]<a href="#">${currentMenu_parentName}</a>[#else]<a href="#">${currentMenu_menuName}</a>[/#if]&nbsp;&nbsp;<i class="fa fa-right"></i>&nbsp;&nbsp;</li>
+		<li class="active">${currentMenu_menuName}</li>
+	</ol>
+	<div class="btn btn-blue reportrange hide">
+		<i class="fa fa-calendar"></i>&nbsp;<span></span>&nbsp;report&nbsp;<i class="fa fa-angle-down"></i> <input type="hidden" name="datestart" /> <input type="hidden" name="endstart" />
+	</div>
+	<div class="clearfix"></div>
+
+</div>
+
+

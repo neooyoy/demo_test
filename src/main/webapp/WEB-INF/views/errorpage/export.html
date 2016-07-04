@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html class="error-page">
+<head>
+    <title>写字楼</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+</head>
+<body>
+[#include "views/include/top.html"]
+<!--导航 begin-->
+[#include "views/include/include.html"]
+<!--导航 end-->
+
+<div style="width: 500px; position: absolute; left:30%; top:30%;">
+		<div class="page-content">
+			<div class="panel" >
+				<div class="panel-heading">导出提示</span></div>
+				<div class="panel-body panel-state1">
+						<div class="form-inline">
+							<div class="form-group" style="padding-left:107px;">
+								${msg}
+							</div>
+						</div>
+						<div class="form-inline" >
+							<button  id="systemExportReport" onclick="javascript:history.back(-1);" type="button" value="返回" class="btn btn-default">
+							<i class="glyphicon glyphicon-arrow-left"></i>
+							返回
+							</button>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

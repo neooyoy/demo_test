@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>列表页</title>
+    <meta name="keywords" content=" "/>
+    <meta name="description" content=" "/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="renderer" content="webkit">
+    <link rel="stylesheet" href="${jspath}/resources/foreground/css/idangerous.swiper.css"/>
+    <link rel="stylesheet" href="${jspath}/resources/foreground/css/global.css"/>
+    <!--loading mustache js-->
+    <script src="${jspath}/resources/js/mustache/mustache.js?${staticversion}"></script>
+</head>
+<body>
+<div class="wrapper">
+    <div class="header">
+        <div class="container">
+            <h1 class="inline-block"><img class="mr15" src="${jspath}/resources/foreground/images/logo.jpg" width="161"
+                                          height="36"/></h1>
+            <a class="text-link" href="${base}/">首页</a>
+            <a class="text-link" href="#" target="_blank">写字楼出租</a>
+            <span class="flo-right mr35">24小时服务热线：<em class="text-red7">${servicehotlines.phone}</em></span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="search clearfix mt35">
+            <input id="officeName" class="text-inp" type="text" placeholder="请输入您要找的写字楼名称" value="${officeName}"/>
+            <input class="search-btn" type="button" value="搜索" onclick="loadOfficeList(1);"/>
+        </div>
+        <ul class="office-cont clearfix pb30" id="office_ul">
+        </ul>
+
+        <ul class="pagination mb40" id="tableFoot">
+        </ul>
+    </div>
+
+    <div class="footer">
+        <p>
+            地址：${serviceadderss.name}<br/>
+            京ICP证16032088号
+        </p>
+    </div>
+</div>
+<script type="text/javascript" src="${jspath}/resources/foreground/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="${jspath}/resources/foreground/js/idangerous.swiper.min.js"></script>
+<script type="text/javascript" src="${jspath}/resources/foreground/js/base.js"></script>
+
+<script id="tabletemplate" type="x-tmpl-mustache">
+			{{#rows}}
+				<li {{#hasClassOfmr}} class="mr0" {{/hasClassOfmr}} >
+					<a href="${base}/foreGround/detail?id={{id}}" target="_blank">
+						<img src="http://${pictureUrl}/{{imgpath}}${picLastList}" width="375" height="250" alt="{{name}}" />
+						<div class="mask"></div>
+						<div class="office-msg">
+							{{name}}<br />
+							{{price}}元/天/㎡
+						</div>
+					</a>
+				</li>
+			{{/rows}}
+
+</script>
+
+<script>
+    var maxResults = 18;
+    var currentPage = 1;
+    $(function () {
+        loadOfficeList(1);
+
+        $('#officeName').bind('keypress', function (event) {
+            if (event.keyCode == "13") {
+                loadOfficeList(1);
+            }
+        });
+    });
+
+    function loadOfficeList(pageIndex) {
+        if (pageIndex != null) {
+            currentPage = pageIndex;
+        }
+
+        $.post("${base}/foreGround/querylist", {
+                    "name": $("#officeName").val().trim(),
+                    "currentPage": currentPage,
+                    "maxResults": maxResults,
+                    "order": 'id',
+                    "sort": 'asc',
+                    "hasImgpath": 1
+                },
+                function (result) {
+                    if (result != null && result.rows != null) {
+                        for (var i = 0; i < result.rows.length; i++) {
+                            if ((i + 1) % 3 == 0) {
+                                result.rows[i].hasClassOfmr = true;
+                            }
+                        }
+
+                        $("#office_ul").html(Mustache.render($("#tabletemplate").html(), result));
+
+                        loadTableFoot(result);
+                    } else {
+                        $("#office_ul").html("");
+                        $('#tableFoot').html("");
+                    }
+                })
+    }
+
+    //加载表格分页
+    function loadTableFoot(result) {
+        var total = result.total;
+        var pageCount = result.pageSize;
+        var tableFootHtml = "";
+
+        tableFootHtml += "<li><a class='to-index' href='#' onclick='loadOfficeList(1)'>首页</a></li>";
+
+        var leftCount = 1;
+        if (parseInt(currentPage) > 3) {
+            leftCount = parseInt(currentPage) - 2;
+            if (parseInt(pageCount) - leftCount + 1 < 5) {
+                leftCount = parseInt(pageCount) > 5 ? parseInt(pageCount) - 4 : 1;
+            }
+        }
+        var rightCount = leftCount + 4;
+        if (parseInt(pageCount) < rightCount) {
+            rightCount = parseInt(pageCount);
+        }
+        for (var i = leftCount; i <= rightCount; i++) {
+            if (i == parseInt(currentPage)) {
+                tableFootHtml += "<li><a class='active' href='#'>" + i + "</a></li>";
+            } else {
+                tableFootHtml += "<li><a href='#' onclick='loadOfficeList(\"" + i + "\")'>"
+                        + i + "</a></li>";
+            }
+        }
+        if (rightCount != currentPage) {
+            if (rightCount < pageCount) {
+                tableFootHtml += "<li class='brn'><a>···</a></li>";
+            }
+            tableFootHtml += "<li><a href='#' onclick='loadOfficeList(\"" + (currentPage + 1) + "\")'>下一页 &gt;</a></li>";
+            tableFootHtml += "<li><a href='#' onclick='loadOfficeList(\"" + pageCount + "\")'>末页 &gt;&gt;</a></li>";
+        }
+
+        $('#tableFoot').html(tableFootHtml);
+    }
+</script>
+
+</body>
+</html>

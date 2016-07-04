@@ -1,0 +1,126 @@
+﻿body {
+    background: #f2f2f2;
+    font-family: microsoft yahei, arial, verdana, helvetica, sans-serif
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, input, button, select, textarea {
+    font-family: microsoft yahei, arial, verdana, helvetica, sans-serif
+}
+
+a {
+    color: #4996ab;
+    text-decoration: none;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: #fff;
+}
+
+.navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover {
+    color: #333;
+}
+
+.navbar-default .navbar-nav > li > a.active {
+    color: #333;
+    background: #f8f8f8;
+}
+
+.nav-son {
+    padding-left: 0;
+    padding-right: 0;
+    background: #f8f8f8;
+    text-align: center;
+}
+
+.nav-son .navbar-nav > li{
+    padding: 0 9px;
+}
+
+.nav-son .navbar-nav > li > a {
+    padding: 16px 5px;
+    color: #333;
+}
+
+.nav-son .navbar-nav > li > a.focus, .nav-son .navbar-nav > li > a:hover {
+    padding: 16px 5px 14px;
+    border-bottom: 2px solid #ff9600;
+}
+
+.nav-son .navbar-nav > li > a.active_bor {
+    padding: 16px 5px 14px;
+    border-bottom: 2px solid #ff9600;
+}
+
+@media (max-width: 767px) {
+    .navbar-collapse {
+        float: left;
+        width: 70%;
+    }
+
+    .container-fluid > .navbar-collapse, .container-fluid > .navbar-header {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .navbar-toggle {
+        margin-right: 0;
+    }
+
+    .nav-son {
+        float: right;
+        width: 30%;
+        margin-right: 0;
+        overflow-x: hidden;
+    }
+}
+
+.main_1000 {
+    max-width: 1000px;
+    padding: 50px 80px 80px;
+    background: #fff;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom: 2px solid #4996ab;
+    border-top: 2px solid #4996ab;
+}
+
+@media (min-width: 1200px) {
+    .main_1000 {
+        width: 1000px;
+    }
+
+    .form-horizontal {
+        width: 560px;
+    }
+}
+
+@media (min-width: 968px) {
+    .main_1000 {
+        width: 90%;
+    }
+}
+
+@media (max-width: 767px) {
+    .main_1000 {
+        padding: 0;
+        padding-right: 0;
+        border-top: none;
+        box-shadow: none;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        background-color: #fff;
+    }
+}
+
+.required {
+    color: #e02222;
+    font-size: 12px;
+    padding-left: 2px;
+}
+
+
+

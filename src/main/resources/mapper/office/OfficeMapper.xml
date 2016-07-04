@@ -1,0 +1,1405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.publiccms.dao.office.OfficeDao">
+    <resultMap id="officeMap" type="com.publiccms.domain.office.Office">
+        <id property="id" column="Id"/>
+        <result property="name" column="name"/>
+        <result property="nameEn" column="name_en"/>
+        <result property="nameSp" column="name_sp"/>
+        <result property="nameFl" column="name_fl"/>
+        <result property="status" column="status"/>
+        <result property="publishDate" column="publish_date"/>
+        <result property="lockflag" column="lockflag"/>
+        <result property="lockflagAt" column="lockflag_at"/>
+        <result property="allowToCreateHouse" column="allow_to_create_house"/>
+        <result property="imgCount" column="img_count"/>
+        <result property="priority" column="priority"/>
+        <result property="hot" column="hot"/>
+        <result property="cityId" column="city_id"/>
+        <result property="cityName" column="city_name"/>
+        <result property="circleId" column="circle_id"/>
+        <result property="circleName" column="circle_name"/>
+        <result property="districtId" column="district_id"/>
+        <result property="districtName" column="district_name"/>
+        <result property="address" column="address"/>
+        <result property="mapX" column="map_x"/>
+        <result property="mapY" column="map_y"/>
+        <result property="createId" column="create_id"/>
+        <result property="createName" column="create_name"/>
+        <result property="createAt" column="create_at"/>
+        <result property="modifyId" column="modify_id"/>
+        <result property="modifyName" column="modify_name"/>
+        <result property="modifyAt" column="modify_at"/>
+        <result property="accendantId" column="accendant_id"/>
+        <result property="accendantName" column="accendant_name"/>
+        <result property="managementType" column="management_type"/>
+        <result property="managementLevel" column="management_level"/>
+        <result property="managementCompany" column="management_company"/>
+        <result property="managementMoney" column="management_money"/>
+        <result property="investorType" column="investor_type"/>
+        <result property="investor" column="investor"/>
+        <result property="investorContact" column="investor_contact"/>
+        <result property="investorContactphone" column="investor_contactphone"/>
+        <result property="investorJob" column="investor_Job"/>
+        <result property="developerCompany" column="developer_company"/>
+        <result property="agentCompany" column="agent_company"/>
+        <result property="tel" column="tel"/>
+        <result property="designCompany" column="design_company"/>
+        <result property="constructionCompany" column="construction_company"/>
+        <result property="timeOfOf" column="time_of_completion"/>
+        <result property="standardHeight" column="standard_height"/>
+        <result property="landAreasize" column="land_areasize"/>
+        <result property="totalAreasize" column="total_areasize"/>
+        <result property="buildingHeight" column="building_height"/>
+        <result property="floorAreasize" column="floor_areasize"/>
+        <result property="constructionRatio" column="construction_ratio"/>
+        <result property="groundfloor" column="groundfloor"/>
+        <result property="undergroundfloor" column="undergroundfloor"/>
+        <result property="plotRatio" column="plot_ratio"/>
+        <result property="floorHeight" column="floor_height"/>
+        <result property="price" column="price"/>
+        <result property="remainderArea" column="remainder_area"/>
+        <result property="description" column="description"/>
+        <result property="artremark" column="artremark"/>
+        <result property="customcatagory1" column="customcatagory1"/>
+        <result property="customcatagory2" column="customcatagory2"/>
+        <result property="customcatagory3" column="customcatagory3"/>
+        <result property="greeningRatio" column="greening_ratio"/>
+        <result property="parkingCount" column="parking_count"/>
+        <result property="parkingFees" column="parking_fees"/>
+        <result property="liftBrand" column="lift_brand"/>
+        <result property="liftPartition" column="lift_partition"/>
+        <result property="liftCount" column="lift_count"/>
+        <result property="goodsliftcount" column="goodsliftcount"/>
+        <result property="airconditionerBrand" column="airconditioner_brand"/>
+        <result property="airconditionerCount" column="airconditioner_count"/>
+        <result property="airconditionerOpen" column="airconditioner_open"/>
+        <result property="airconditionerSystem" column="airconditioner_system"/>
+        <result property="airconditionerOvertimebill" column="airconditioner_overtimebill"/>
+        <result property="lobbyheight" column="lobbyheight"/>
+        <result property="phonebill" column="phonebill"/>
+        <result property="bathroom" column="bathroom"/>
+        <result property="outerWall" column="outerWall"/>
+        <result property="porch" column="porch"/>
+        <result property="netsystem" column="netsystem"/>
+        <result property="aerationSystem" column="aeration_system"/>
+        <result property="satellite" column="satellite"/>
+        <result property="vent" column="vent"/>
+        <result property="smartdevices" column="smartdevices"/>
+        <result property="isfull" column="isfull"/>
+        <result property="lockChecked" column="lock_checked"/>
+        <result property="houseCount" column="house_count"/>
+        <result property="auditpersonName" column="auditperson_name"/>
+        <result property="deliverDate" column="deliver_date"/>
+        <result property="lockCheckedId" column="lock_checked_id"/>
+        <result property="lockCheckedAt" column="lock_checked_at"/>
+        <result property="isfullCheckedId" column="isfull_checked_id"/>
+        <result property="isfullCheckedAt" column="isfull_checked_at"/>
+        <result property="kongpanNumber" column="kongpan_number"/>
+        <result property="lockNumber" column="lock_number"/>
+        <result property="lockCheckedName" column="lock_checked_name"/>
+        <result property="isfullCheckedName" column="isfull_checked_name"/>
+        <result property="firstFloorHeight" column="first_floor_height"/>
+        <result property="developerIntroduction" column="developer_introduction"/>
+        <result property="imgpath" column="imgpath"/>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.publiccms.domain.office.Office">
+        insert into office (
+                  Id,
+                  name,
+                  name_en,
+                  name_sp,
+                  name_fl,
+                  status,
+                  allow_to_create_house,
+                  lockflag,
+                  priority,
+                  hot,
+                  city_id,
+                  city_name,
+                  circle_id,
+                  circle_name,
+                  district_id,
+                  district_name,
+                  address,
+                  create_id,
+                  create_name,
+                  create_at,
+                  modify_id,
+                  modify_name,
+                  modify_at,
+                  accendant_id,
+                  accendant_name,
+                  management_type,
+                  management_level,
+                  management_company,
+                  management_money,
+                  investor_type,
+                  investor,
+                  investor_contact,
+                  investor_contactphone,
+                  investor_Job,
+                  developer_company,
+                  agent_company,
+                  tel,
+                  design_company,
+                  construction_company,
+                  time_of_completion,
+                  standard_height,
+                  land_areasize,
+                  total_areasize,
+                  building_height,
+                  floor_areasize,
+                  construction_ratio,
+                  groundfloor,
+                  undergroundfloor,
+                  plot_ratio,
+                  floor_height,
+                  price,
+                  remainder_area,
+                  description,
+                  artremark,
+                  customcatagory1,
+                  customcatagory2,
+                  customcatagory3,
+                  greening_ratio,
+                  parking_count,
+                  parking_fees,
+                  lift_brand,
+                  lift_partition,
+                  lift_count,
+                  goodsliftcount,
+                  airconditioner_brand,
+                  airconditioner_count,
+                  airconditioner_open,
+                  airconditioner_system,
+                  airconditioner_overtimebill,
+                  lobbyheight,
+                  phonebill,
+                  bathroom,
+                  outerWall,
+                  porch,
+                  netsystem,
+                  aeration_system,
+                  satellite,
+                  vent,
+                  smartdevices,
+                  isfull,
+                  lock_checked,
+                  modify_actionid,
+                  deliver_date,
+                  first_floor_height,
+                  developer_introduction
+              )
+        values (
+                  #{id},
+                  #{name},
+                  #{nameEn},
+                  #{nameSp},
+                  #{nameFl},
+                  #{status},
+                  #{allowToCreateHouse},
+                  #{lockflag},
+                  #{priority},
+                  #{hot},
+                  #{cityId},
+                  #{cityName},
+                  #{circleId},
+                  #{circleName},
+                  #{districtId},
+                  #{districtName},
+                  #{address},
+                  #{createId},
+                  #{createName},
+                  #{createAt},
+                  #{modifyId},
+                  #{modifyName},
+                  #{modifyAt},
+                  #{accendantId},
+                  #{accendantName},
+                  #{managementType},
+                  #{managementLevel},
+                  #{managementCompany},
+                  #{managementMoney},
+                  #{investorType},
+                  #{investor},
+                  #{investorContact},
+                  #{investorContactphone},
+                  #{investorJob},
+                  #{developerCompany},
+                  #{agentCompany},
+                  #{tel},
+                  #{designCompany},
+                  #{constructionCompany},
+                  #{timeOfOf},
+                  #{standardHeight},
+                  #{landAreasize},
+                  #{totalAreasize},
+                  #{buildingHeight},
+                  #{floorAreasize},
+                  #{constructionRatio},
+                  #{groundfloor},
+                  #{undergroundfloor},
+                  #{plotRatio},
+                  #{floorHeight},
+                  #{price},
+                  #{remainderArea},
+                  #{description},
+                  #{artremark},
+                  #{customcatagory1},
+                  #{customcatagory2},
+                  #{customcatagory3},
+                  #{greeningRatio},
+                  #{parkingCount},
+                  #{parkingFees},
+                  #{liftBrand},
+                  #{liftPartition},
+                  #{liftCount},
+                  #{goodsliftcount},
+                  #{airconditionerBrand},
+                  #{airconditionerCount},
+                  #{airconditionerOpen},
+                  #{airconditionerSystem},
+                  #{airconditionerOvertimebill},
+                  #{lobbyheight},
+                  #{phonebill},
+                  #{bathroom},
+                  #{outerWall},
+                  #{porch},
+                  #{netsystem},
+                  #{aerationSystem},
+                  #{satellite},
+                  #{vent},
+                  #{smartdevices},
+                  #{isfull},
+                  #{lockChecked},
+                  #{modifyActionid},
+                  #{deliverDate},
+                  #{firstFloorHeight},
+                  #{developerIntroduction}
+              )
+    </insert>
+
+    <select id="selectByName" parameterType="com.publiccms.domain.office.Office" resultMap="officeMap">
+	 	select *
+	 	from office o
+	    where o.name = #{name} 
+	    and o.city_id = #{cityId}
+        <if test="id != null">
+        and o.Id != #{id}
+        </if>
+	 </select>
+
+	<select id="selectCityIdById" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		select o.city_id
+	 	from office o
+	    where o.id = #{id}
+	</select>
+
+    <select id="selectById" resultMap="officeMap" parameterType="java.lang.Integer">
+		select
+            o.Id,
+            o.name,
+            o.name_en,
+            o.name_sp,
+            o.name_fl,
+            o.status,
+            o.publish_date,
+            o.lockflag,
+            o.allow_to_create_house,
+            o.img_count,
+            o.priority,
+            o.hot,
+            o.city_id,
+            o.city_name,
+            o.circle_id,
+            o.circle_name,
+            o.district_id,
+            o.district_name,
+            o.address,
+            o.map_x,
+            o.map_y,
+            o.create_id,
+            o.create_name,
+            o.create_at,
+            o.modify_id,
+            o.modify_name,
+            o.modify_at,
+            o.accendant_id,
+            o.accendant_name,
+            o.management_type,
+            o.management_level,
+            o.management_company,
+            o.management_money,
+            o.investor_type,
+            o.investor,
+            o.investor_contact,
+            o.investor_contactphone,
+            o.investor_Job,
+            o.developer_company,
+            o.agent_company,
+            o.tel,
+            o.design_company,
+            o.construction_company,
+            o.time_of_completion,
+            o.standard_height,
+            o.land_areasize,
+            o.total_areasize,
+            o.building_height,
+            o.floor_areasize,
+            o.construction_ratio,
+            o.groundfloor,
+            o.undergroundfloor,
+            o.plot_ratio,
+            o.floor_height,
+            o.price,
+            o.remainder_area,
+            o.description,
+            o.artremark,
+            o.customcatagory1,
+            o.customcatagory2,
+            o.customcatagory3,
+            o.greening_ratio,
+            o.parking_count,
+            o.parking_fees,
+            o.lift_brand,
+            o.lift_partition,
+            o.lift_count,
+            o.goodsliftcount,
+            o.airconditioner_brand,
+            o.airconditioner_count,
+            o.airconditioner_open,
+            o.airconditioner_system,
+            o.airconditioner_overtimebill,
+            o.lobbyheight,
+            o.phonebill,
+            o.bathroom,
+            o.outerWall,
+            o.porch,
+            o.netsystem,
+            o.aeration_system,
+            o.satellite,
+            o.vent,
+            o.smartdevices,
+            o.isfull,
+            o.lock_checked,
+            o.house_count,
+            o.deliver_date,
+            o.lock_checked_id,
+            o.lock_checked_at,
+            o.isfull_checked_id,
+            o.isfull_checked_at,
+            o.kongpan_number,
+            o.lock_number,
+            o.lock_checked_name,
+            o.isfull_checked_name,
+            o.first_floor_height,
+            o.developer_introduction
+	    from office o
+	    where o.id = #{id} 
+	</select>
+
+    <select id="selectByListPage" resultMap="officeMap" parameterType="map">
+        select
+        o.Id,
+        o.name,
+        o.name_en,
+        o.name_sp,
+        o.name_fl,
+        o.status,
+        o.publish_date,
+        o.lockflag,
+        o.allow_to_create_house,
+        o.img_count,
+        o.priority,
+        o.hot,
+        o.city_id,
+        o.city_name,
+        o.circle_id,
+        o.circle_name,
+        o.district_id,
+        o.district_name,
+        o.address,
+        o.map_x,
+        o.map_y,
+        o.create_id,
+        o.create_name,
+        o.create_at,
+        o.modify_id,
+        o.modify_name,
+        o.modify_at,
+        o.accendant_id,
+        o.accendant_name,
+        o.management_type,
+        o.management_level,
+        o.management_company,
+        o.management_money,
+        o.investor_type,
+        o.investor,
+        o.investor_contact,
+        o.investor_contactphone,
+        o.investor_Job,
+        o.developer_company,
+        o.agent_company,
+        o.tel,
+        o.design_company,
+        o.construction_company,
+        o.time_of_completion,
+        o.standard_height,
+        o.land_areasize,
+        o.total_areasize,
+        o.building_height,
+        o.floor_areasize,
+        o.construction_ratio,
+        o.groundfloor,
+        o.undergroundfloor,
+        o.plot_ratio,
+        o.floor_height,
+        o.price,
+        o.remainder_area,
+        o.description,
+        o.artremark,
+        o.customcatagory1,
+        o.customcatagory2,
+        o.customcatagory3,
+        o.greening_ratio,
+        o.parking_count,
+        o.parking_fees,
+        o.lift_brand,
+        o.lift_partition,
+        o.lift_count,
+        o.goodsliftcount,
+        o.airconditioner_brand,
+        o.airconditioner_count,
+        o.airconditioner_open,
+        o.airconditioner_system,
+        o.airconditioner_overtimebill,
+        o.lobbyheight,
+        o.phonebill,
+        o.bathroom,
+        o.outerWall,
+        o.porch,
+        o.netsystem,
+        o.aeration_system,
+        o.satellite,
+        o.vent,
+        o.smartdevices,
+        o.house_count,
+        o.first_floor_height,
+        o.developer_introduction
+        from office o
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="vo.id != null">
+                and Id = #{vo.id}
+            </if>
+            <if test="vo.name != null">
+                and name = #{vo.name}
+            </if>
+            <if test="vo.nameEn != null">
+                and name_en = #{vo.nameEn}
+            </if>
+            <if test="vo.nameSp != null">
+                and name_sp = #{vo.nameSp}
+            </if>
+            <if test="vo.nameFl != null">
+                and name_fl = #{vo.nameFl}
+            </if>
+            <if test="vo.status != null">
+                and status = #{vo.status}
+            </if>
+            <if test="vo.publishDate != null">
+                and publish_date = #{vo.publishDate}
+            </if>
+            <if test="vo.lockflag != null">
+                and lockflag = #{vo.lockflag}
+            </if>
+            <if test="vo.allowToCreateHouse != null">
+                and allow_to_create_house = #{vo.allowToCreateHouse}
+            </if>
+            <if test="vo.imgCount != null">
+                and img_count = #{vo.imgCount}
+            </if>
+            <if test="vo.priority != null">
+                and priority = #{vo.priority}
+            </if>
+            <if test="vo.hot != null">
+                and hot = #{vo.hot}
+            </if>
+            <if test="vo.cityId != null">
+                and city_id = #{vo.cityId}
+            </if>
+            <if test="vo.cityName != null">
+                and city_name = #{vo.cityName}
+            </if>
+            <if test="vo.circleId != null">
+                and circle_id = #{vo.circleId}
+            </if>
+            <if test="vo.circleName != null">
+                and circle_name = #{vo.circleName}
+            </if>
+            <if test="vo.districtId != null">
+                and district_id = #{vo.districtId}
+            </if>
+            <if test="vo.districtName != null">
+                and district_name = #{vo.districtName}
+            </if>
+            <if test="vo.address != null">
+                and address = #{vo.address}
+            </if>
+            <if test="vo.mapX != null">
+                and map_x = #{vo.mapX}
+            </if>
+            <if test="vo.mapY != null">
+                and map_y = #{vo.mapY}
+            </if>
+            <if test="vo.createId != null">
+                and create_id = #{vo.createId}
+            </if>
+            <if test="vo.createName != null">
+                and create_name = #{vo.createName}
+            </if>
+            <if test="vo.createAt != null">
+                and create_at = #{vo.createAt}
+            </if>
+            <if test="vo.modifyId != null">
+                and modify_id = #{vo.modifyId}
+            </if>
+            <if test="vo.modifyName != null">
+                and modify_name = #{vo.modifyName}
+            </if>
+            <if test="vo.modifyAt != null">
+                and modify_at = #{vo.modifyAt}
+            </if>
+            <if test="vo.accendantId != null">
+                and accendant_id = #{vo.accendantId}
+            </if>
+            <if test="vo.accendantName != null">
+                and accendant_name = #{vo.accendantName}
+            </if>
+            <if test="vo.managementType != null">
+                and management_type = #{vo.managementType}
+            </if>
+            <if test="vo.managementLevel != null">
+                and management_level = #{vo.managementLevel}
+            </if>
+            <if test="vo.managementCompany != null">
+                and management_company = #{vo.managementCompany}
+            </if>
+            <if test="vo.managementMoney != null">
+                and management_money = #{vo.managementMoney}
+            </if>
+            <if test="vo.investorType != null">
+                and investor_type = #{vo.investorType}
+            </if>
+            <if test="vo.investor != null">
+                and investor = #{vo.investor}
+            </if>
+            <if test="vo.investorContact != null">
+                and investor_contact = #{vo.investorContact}
+            </if>
+            <if test="vo.investorContactphone != null">
+                and investor_contactphone = #{vo.investorContactphone}
+            </if>
+            <if test="vo.investorJob != null">
+                and investor_Job = #{vo.investorJob}
+            </if>
+            <if test="vo.developerCompany != null">
+                and developer_company = #{vo.developerCompany}
+            </if>
+            <if test="vo.agentCompany != null">
+                and agent_company = #{vo.agentCompany}
+            </if>
+            <if test="vo.tel != null">
+                and tel = #{vo.tel}
+            </if>
+            <if test="vo.designCompany != null">
+                and design_company = #{vo.designCompany}
+            </if>
+            <if test="vo.constructionCompany != null">
+                and construction_company = #{vo.constructionCompany}
+            </if>
+            <if test="vo.timeOfOf != null">
+                and time_of_completion = #{vo.timeOfOf}
+            </if>
+            <if test="vo.standardHeight != null">
+                and standard_height = #{vo.standardHeight}
+            </if>
+            <if test="vo.landAreasize != null">
+                and land_areasize = #{vo.landAreasize}
+            </if>
+            <if test="vo.totalAreasize != null">
+                and total_areasize = #{vo.totalAreasize}
+            </if>
+            <if test="vo.buildingHeight != null">
+                and building_height = #{vo.buildingHeight}
+            </if>
+            <if test="vo.floorAreasize != null">
+                and floor_areasize = #{vo.floorAreasize}
+            </if>
+            <if test="vo.constructionRatio != null">
+                and construction_ratio = #{vo.constructionRatio}
+            </if>
+            <if test="vo.groundfloor != null">
+                and groundfloor = #{vo.groundfloor}
+            </if>
+            <if test="vo.undergroundfloor != null">
+                and undergroundfloor = #{vo.undergroundfloor}
+            </if>
+            <if test="vo.plotRatio != null">
+                and plot_ratio = #{vo.plotRatio}
+            </if>
+            <if test="vo.floorHeight != null">
+                and floor_height = #{vo.floorHeight}
+            </if>
+            <if test="vo.price != null">
+                and price = #{vo.price}
+            </if>
+            <if test="vo.remainderArea != null">
+                and remainder_area = #{vo.remainderArea}
+            </if>
+            <if test="vo.description != null">
+                and description = #{vo.description}
+            </if>
+            <if test="vo.artremark != null">
+                and artremark = #{vo.artremark}
+            </if>
+            <if test="vo.customcatagory1 != null">
+                and customcatagory1 = #{vo.customcatagory1}
+            </if>
+            <if test="vo.customcatagory2 != null">
+                and customcatagory2 = #{vo.customcatagory2}
+            </if>
+            <if test="vo.customcatagory3 != null">
+                and customcatagory3 = #{vo.customcatagory3}
+            </if>
+            <if test="vo.greeningRatio != null">
+                and greening_ratio = #{vo.greeningRatio}
+            </if>
+            <if test="vo.parkingCount != null">
+                and parking_count = #{vo.parkingCount}
+            </if>
+            <if test="vo.parkingFees != null">
+                and parking_fees = #{vo.parkingFees}
+            </if>
+            <if test="vo.liftBrand != null">
+                and lift_brand = #{vo.liftBrand}
+            </if>
+            <if test="vo.liftPartition != null">
+                and lift_partition = #{vo.liftPartition}
+            </if>
+            <if test="vo.liftCount != null">
+                and lift_count = #{vo.liftCount}
+            </if>
+            <if test="vo.goodsliftcount != null">
+                and goodsliftcount = #{vo.goodsliftcount}
+            </if>
+            <if test="vo.airconditionerBrand != null">
+                and airconditioner_brand = #{vo.airconditionerBrand}
+            </if>
+            <if test="vo.airconditionerCount != null">
+                and airconditioner_count = #{vo.airconditionerCount}
+            </if>
+            <if test="vo.airconditionerOpen != null">
+                and airconditioner_open = #{vo.airconditionerOpen}
+            </if>
+            <if test="vo.airconditionerSystem != null">
+                and airconditioner_system = #{vo.airconditionerSystem}
+            </if>
+            <if test="vo.airconditionerOvertimebill != null">
+                and airconditioner_overtimebill = #{vo.airconditionerOvertimebill}
+            </if>
+            <if test="vo.lobbyheight != null">
+                and lobbyheight = #{vo.lobbyheight}
+            </if>
+            <if test="vo.phonebill != null">
+                and phonebill = #{vo.phonebill}
+            </if>
+            <if test="vo.bathroom != null">
+                and bathroom = #{vo.bathroom}
+            </if>
+            <if test="vo.outerWall != null">
+                and outerWall = #{vo.outerWall}
+            </if>
+            <if test="vo.porch != null">
+                and porch = #{vo.porch}
+            </if>
+            <if test="vo.netsystem != null">
+                and netsystem = #{vo.netsystem}
+            </if>
+            <if test="vo.aerationSystem != null">
+                and aeration_system = #{vo.aerationSystem}
+            </if>
+            <if test="vo.satellite != null">
+                and satellite = #{vo.satellite}
+            </if>
+            <if test="vo.vent != null">
+                and vent = #{vo.vent}
+            </if>
+            <if test="vo.smartdevices != null">
+                and smartdevices = #{vo.smartdevices}
+            </if>
+            <if test="vo.firstFloorHeight != null">
+                and first_floor_height = #{vo.firstFloorHeight}
+            </if>
+            <if test="vo.developerIntroduction != null">
+                and developer_introduction = #{vo.developerIntroduction}
+            </if>
+        </trim>
+        order by o.Id desc
+    </select>
+
+    <select id="listAll" resultMap="officeMap">
+		select
+            o.Id,
+            o.name,
+            o.name_en,
+            o.name_sp,
+            o.name_fl,
+            o.status,
+            o.publish_date,
+            o.lockflag,
+            o.allow_to_create_house,
+            o.img_count,
+            o.priority,
+            o.hot,
+            o.city_id,
+            o.city_name,
+            o.circle_id,
+            o.circle_name,
+            o.district_id,
+            o.district_name,
+            o.address,
+            o.map_x,
+            o.map_y,
+            o.create_id,
+            o.create_name,
+            o.create_at,
+            o.modify_id,
+            o.modify_name,
+            o.modify_at,
+            o.accendant_id,
+            o.accendant_name,
+            o.management_type,
+            o.management_level,
+            o.management_company,
+            o.management_money,
+            o.investor_type,
+            o.investor,
+            o.investor_contact,
+            o.investor_contactphone,
+            o.investor_Job,
+            o.developer_company,
+            o.agent_company,
+            o.tel,
+            o.design_company,
+            o.construction_company,
+            o.time_of_completion,
+            o.standard_height,
+            o.land_areasize,
+            o.total_areasize,
+            o.building_height,
+            o.floor_areasize,
+            o.construction_ratio,
+            o.groundfloor,
+            o.undergroundfloor,
+            o.plot_ratio,
+            o.floor_height,
+            o.price,
+            o.remainder_area,
+            o.description,
+            o.artremark,
+            o.customcatagory1,
+            o.customcatagory2,
+            o.customcatagory3,
+            o.greening_ratio,
+            o.parking_count,
+            o.parking_fees,
+            o.lift_brand,
+            o.lift_partition,
+            o.lift_count,
+            o.goodsliftcount,
+            o.airconditioner_brand,
+            o.airconditioner_count,
+            o.airconditioner_open,
+            o.airconditioner_system,
+            o.airconditioner_overtimebill,
+            o.lobbyheight,
+            o.phonebill,
+            o.bathroom,
+            o.outerWall,
+            o.porch,
+            o.netsystem,
+            o.aeration_system,
+            o.satellite,
+            o.vent,
+            o.smartdevices,
+            o.house_count,
+            o.first_floor_height,
+            o.developer_introduction
+	    from office o
+	</select>
+
+    <update id="updateById" parameterType="com.publiccms.domain.office.Office">
+        update office
+        <set>
+            <if test="id != null">
+                Id = #{id},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="nameEn != null">
+                name_en = #{nameEn},
+            </if>
+            <if test="nameSp != null">
+                name_sp = #{nameSp},
+            </if>
+            <if test="nameFl != null">
+                name_fl = #{nameFl},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="publishDate != null">
+                publish_date = #{publishDate},
+            </if>
+            <if test="lockflag != null">
+                lockflag = #{lockflag},
+            </if>
+            <if test="lockflagAt != null">
+                lockflag_at = #{lockflagAt},
+            </if>
+            <if test="allowToCreateHouse != null">
+                allow_to_create_house = #{allowToCreateHouse},
+            </if>
+            <if test="imgCount != null">
+                img_count = #{imgCount},
+            </if>
+            <if test="priority != null">
+                priority = #{priority},
+            </if>
+            <if test="hot != null">
+                hot = #{hot},
+            </if>
+            <if test="cityId != null">
+                city_id = #{cityId},
+            </if>
+            <if test="cityName != null">
+                city_name = #{cityName},
+            </if>
+            <if test="circleId != null">
+                circle_id = #{circleId},
+            </if>
+            <if test="circleName != null">
+                circle_name = #{circleName},
+            </if>
+            <if test="districtId != null">
+                district_id = #{districtId},
+            </if>
+            <if test="districtName != null">
+                district_name = #{districtName},
+            </if>
+            <if test="address != null">
+                address = #{address},
+            </if>
+            <if test="mapX != null">
+                map_x = #{mapX},
+            </if>
+            <if test="mapY != null">
+                map_y = #{mapY},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId},
+            </if>
+            <if test="createName != null">
+                create_name = #{createName},
+            </if>
+            <if test="createAt != null">
+                create_at = #{createAt},
+            </if>
+            <if test="modifyId != null">
+                modify_id = #{modifyId},
+            </if>
+            <if test="modifyName != null">
+                modify_name = #{modifyName},
+            </if>
+            <if test="modifyAt != null">
+                modify_at = #{modifyAt},
+            </if>
+            <if test="accendantId != null">
+                accendant_id = #{accendantId},
+            </if>
+            <if test="accendantName != null">
+                accendant_name = #{accendantName},
+            </if>
+            <if test="managementType != null">
+                management_type = #{managementType},
+            </if>
+            <if test="managementLevel != null">
+                management_level = #{managementLevel},
+            </if>
+            <if test="managementCompany != null">
+                management_company = #{managementCompany},
+            </if>
+            <if test="managementMoney != null">
+                management_money = #{managementMoney},
+            </if>
+            <if test="investorType != null">
+                investor_type = #{investorType},
+            </if>
+            <if test="investor != null">
+                investor = #{investor},
+            </if>
+            <if test="investorContact != null">
+                investor_contact = #{investorContact},
+            </if>
+            <if test="investorContactphone != null">
+                investor_contactphone = #{investorContactphone},
+            </if>
+            <if test="investorJob != null">
+                investor_Job = #{investorJob},
+            </if>
+            <if test="developerCompany != null">
+                developer_company = #{developerCompany},
+            </if>
+            <if test="agentCompany != null">
+                agent_company = #{agentCompany},
+            </if>
+            <if test="tel != null">
+                tel = #{tel},
+            </if>
+            <if test="designCompany != null">
+                design_company = #{designCompany},
+            </if>
+            <if test="constructionCompany != null">
+                construction_company = #{constructionCompany},
+            </if>
+            <if test="timeOfOf != null">
+                time_of_completion = #{timeOfOf},
+            </if>
+            <if test="standardHeight != null">
+                standard_height = #{standardHeight},
+            </if>
+            <if test="landAreasize != null">
+                land_areasize = #{landAreasize},
+            </if>
+            <if test="totalAreasize != null">
+                total_areasize = #{totalAreasize},
+            </if>
+            <if test="buildingHeight != null">
+                building_height = #{buildingHeight},
+            </if>
+            <if test="floorAreasize != null">
+                floor_areasize = #{floorAreasize},
+            </if>
+            <if test="constructionRatio != null">
+                construction_ratio = #{constructionRatio},
+            </if>
+            <if test="groundfloor != null">
+                groundfloor = #{groundfloor},
+            </if>
+            <if test="undergroundfloor != null">
+                undergroundfloor = #{undergroundfloor},
+            </if>
+            <if test="plotRatio != null">
+                plot_ratio = #{plotRatio},
+            </if>
+            <if test="floorHeight != null">
+                floor_height = #{floorHeight},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="remainderArea != null">
+                remainder_area = #{remainderArea},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="artremark != null">
+                artremark = #{artremark},
+            </if>
+            <if test="customcatagory1 != null">
+                customcatagory1 = #{customcatagory1},
+            </if>
+            <if test="customcatagory2 != null">
+                customcatagory2 = #{customcatagory2},
+            </if>
+            <if test="customcatagory3 != null">
+                customcatagory3 = #{customcatagory3},
+            </if>
+            <if test="greeningRatio != null">
+                greening_ratio = #{greeningRatio},
+            </if>
+            <if test="parkingCount != null">
+                parking_count = #{parkingCount},
+            </if>
+            <if test="parkingFees != null">
+                parking_fees = #{parkingFees},
+            </if>
+            <if test="liftBrand != null">
+                lift_brand = #{liftBrand},
+            </if>
+            <if test="liftPartition != null">
+                lift_partition = #{liftPartition},
+            </if>
+            <if test="liftCount != null">
+                lift_count = #{liftCount},
+            </if>
+            <if test="goodsliftcount != null">
+                goodsliftcount = #{goodsliftcount},
+            </if>
+            <if test="airconditionerBrand != null">
+                airconditioner_brand = #{airconditionerBrand},
+            </if>
+            <if test="airconditionerCount != null">
+                airconditioner_count = #{airconditionerCount},
+            </if>
+            <if test="airconditionerOpen != null">
+                airconditioner_open = #{airconditionerOpen},
+            </if>
+            <if test="airconditionerSystem != null">
+                airconditioner_system = #{airconditionerSystem},
+            </if>
+            <if test="airconditionerOvertimebill != null">
+                airconditioner_overtimebill = #{airconditionerOvertimebill},
+            </if>
+            <if test="lobbyheight != null">
+                lobbyheight = #{lobbyheight},
+            </if>
+            <if test="phonebill != null">
+                phonebill = #{phonebill},
+            </if>
+            <if test="bathroom != null">
+                bathroom = #{bathroom},
+            </if>
+            <if test="outerWall != null">
+                outerWall = #{outerWall},
+            </if>
+            <if test="porch != null">
+                porch = #{porch},
+            </if>
+            <if test="netsystem != null">
+                netsystem = #{netsystem},
+            </if>
+            <if test="aerationSystem != null">
+                aeration_system = #{aerationSystem},
+            </if>
+            <if test="satellite != null">
+                satellite = #{satellite},
+            </if>
+            <if test="vent != null">
+                vent = #{vent},
+            </if>
+            <if test="smartdevices != null">
+                smartdevices = #{smartdevices},
+            </if>
+            <if test="isfull != null">
+                isfull = #{isfull},
+            </if>
+            <if test="lockChecked != null">
+                lock_checked = #{lockChecked},
+            </if>
+            <if test="modifyActionid != null">
+                modify_actionid = #{modifyActionid},
+            </if>
+            <if test="lockChecked !=null">
+                lock_checked =#{lockChecked},
+            </if>
+            <if test="houseCount !=null">
+                house_count =#{houseCount},
+            </if>
+            <if test="deliverDate !=null">
+                deliver_date=#{deliverDate},
+            </if>
+            <if test="lockCheckedId !=null">
+                lock_checked_id =#{lockCheckedId},
+            </if>
+            <if test="lockCheckedAt !=null">
+                lock_checked_at =#{lockCheckedAt},
+            </if>
+            <if test="isfullCheckedId !=null">
+                isfull_checked_id =#{isfullCheckedId},
+            </if>
+            <if test="isfullCheckedAt !=null">
+                isfull_checked_at =#{isfullCheckedAt},
+            </if>
+            <if test="kongpanNumber !=null">
+                kongpan_number =#{kongpanNumber},
+            </if>
+            <if test="lockNumber !=null">
+                lock_number =#{lockNumber},
+            </if>
+            <if test="lockCheckedName !=null">
+                lock_checked_name =#{lockCheckedName},
+            </if>
+            <if test="isfullCheckedName !=null">
+                isfull_checked_name =#{isfullCheckedName},
+            </if>
+            <if test="firstFloorHeight !=null">
+                first_floor_height =#{firstFloorHeight},
+            </if>
+            <if test="developerIntroduction !=null">
+                developer_introduction =#{developerIntroduction}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <update id="updateBuildingLocationById" parameterType="com.publiccms.domain.office.Office">
+	    update office set
+        modify_at = #{modifyAt},
+	          map_x = #{mapX},
+	          map_y = #{mapY},
+	          modify_id = #{modifyId},
+	          modify_name = #{modifyName},
+	          modify_at = #{modifyAt},
+	          modify_actionid = #{modifyActionid}
+	    where id = #{id}
+	</update>
+
+    <update id="increaseHouseCount">
+        update office
+        set
+            house_count=house_count+1
+        where id = #{id}
+    </update>
+    <update id="decreaseHouseCount" parameterType="com.publiccms.domain.office.Office">
+        update office
+        set
+            house_count=house_count-1
+        where id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from office
+        where id = #{id}
+    </delete>
+
+
+    <select id="selectBuildingsListPage" resultMap="officeMap" parameterType="map">
+        <if test="vo.hasImgpath != null and vo.hasImgpath==1">
+            select * from (
+        </if>
+
+        select
+        o.Id,
+        o.name,
+        o.name_en,
+        o.name_sp,
+        o.name_fl,
+        o.status,
+        o.publish_date,
+        o.lockflag,
+        o.allow_to_create_house,
+        o.img_count,
+        o.priority,
+        o.hot,
+        o.city_id,
+        o.city_name,
+        o.circle_id,
+        o.circle_name,
+        o.district_id,
+        o.district_name,
+        o.address,
+        o.map_x,
+        o.map_y,
+        o.create_id,
+        o.create_name,
+        o.create_at,
+        o.modify_id,
+        o.modify_name,
+        o.modify_at,
+        o.accendant_id,
+        o.accendant_name,
+        o.management_type,
+        o.management_level,
+        o.management_company,
+        o.management_money,
+        o.investor_type,
+        o.investor,
+        o.investor_contact,
+        o.investor_contactphone,
+        o.investor_Job,
+        o.developer_company,
+        o.agent_company,
+        o.tel,
+        o.design_company,
+        o.construction_company,
+        o.time_of_completion,
+        o.standard_height,
+        o.land_areasize,
+        o.total_areasize,
+        o.building_height,
+        o.floor_areasize,
+        o.construction_ratio,
+        o.groundfloor,
+        o.undergroundfloor,
+        o.plot_ratio,
+        o.floor_height,
+        o.price,
+        o.remainder_area,
+        o.description,
+        o.artremark,
+        o.customcatagory1,
+        o.customcatagory2,
+        o.customcatagory3,
+        o.greening_ratio,
+        o.parking_count,
+        o.parking_fees,
+        o.lift_brand,
+        o.lift_partition,
+        o.lift_count,
+        o.goodsliftcount,
+        o.airconditioner_brand,
+        o.airconditioner_count,
+        o.airconditioner_open,
+        o.airconditioner_system,
+        o.airconditioner_overtimebill,
+        o.lobbyheight,
+        o.phonebill,
+        o.bathroom,
+        o.outerWall,
+        o.porch,
+        o.netsystem,
+        o.aeration_system,
+        o.satellite,
+        o.vent,
+        o.smartdevices,
+        o.house_count,
+        o.isfull,
+        o.kongpan_number,
+        o.lock_number,
+        o.first_floor_height,
+
+        <if test="vo.hasImgpath != null and vo.hasImgpath==1">
+            oi.imgpath,
+        </if>
+
+        o.developer_introduction
+        from office o
+
+        <if test="vo.hasImgpath != null and vo.hasImgpath==1">
+            INNER JOIN office_imgs oi ON o.id = oi.office_id AND oi.isdelete = 0
+        </if>
+
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="vo.officeId != null and vo.officeId != ''">
+                and o.Id LIKE CONCAT('%',#{vo.officeId},'%')
+            </if>
+            <if test="vo.officeIds != null and vo.officeIds != ''">
+                and o.Id not in(${vo.officeIds})
+            </if>
+            <if test="vo.name != null and vo.name != ''">
+                and ((o.name LIKE CONCAT('%',#{vo.name},'%')) or (o.name_en LIKE CONCAT('%',#{vo.name},'%')) or
+                (o.name_sp LIKE CONCAT('%',#{vo.name},'%')) or (o.name_fl LIKE CONCAT('%',#{vo.name},'%')) )
+            </if>
+            <if test="vo.lockflag != null">
+                and o.lockflag = #{vo.lockflag}
+            </if>
+            <if test="vo.cityIds != null and vo.cityIds != '' ">
+                and o.city_id in (${vo.cityIds})
+            </if>
+            <if test="vo.circleId != null and vo.circleId != '' ">
+                and o.circle_id = #{vo.circleId}
+            </if>
+            <if test="vo.districtId != null and vo.districtId != '' ">
+                and o.district_id = #{vo.districtId}
+            </if>
+            <if test="vo.investorType != null and vo.investorType != '' ">
+                and o.investor_type = #{vo.investorType}
+            </if>
+            <if test="vo.managementLevel != null and vo.managementLevel != '' ">
+                and o.management_level = #{vo.managementLevel}
+            </if>
+            <if test="vo.status != null ">
+                and o.status = #{vo.status}
+            </if>
+            <if test="vo.isfull != null">
+                and o.isfull = #{vo.isfull}
+            </if>
+            <if test="vo.lockChecked != null">
+                and o.lock_checked = #{vo.lockChecked}
+            </if>
+
+        </trim>
+
+        <if test="vo.hasImgpath != null and vo.hasImgpath==1">
+            GROUP BY o.id
+        </if>
+
+        order by o.${vo.order} ${vo.sort}
+
+        <if test="vo.hasImgpath != null and vo.hasImgpath==1">
+            ) office
+        </if>
+    </select>
+
+    <select id="selectNoLockBulidingListPage" resultMap="officeMap" parameterType="map">
+        SELECT a.Id,
+        a.name  FROM  office  a  JOIN
+        (SELECT DISTINCT
+        building.office_id AS office_id
+        FROM building
+        WHERE (building.office_id!=0)) b
+        ON a.Id=b.office_id
+        WHERE a.lockflag=0
+        ORDER by a.create_at DESC
+    </select>
+
+    <update id="updateByofficeId" parameterType="com.publiccms.domain.office.Office">
+            update office SET
+                modify_at = #{modifyAt},
+                modify_id = #{modifyId},
+                modify_name = #{modifyName},
+                modify_actionid = #{modifyActionid},
+                lockflag=#{lockflag},
+                lockflag_at=#{lockflagAt}
+            where id = #{id}
+
+    </update>
+
+    <select id="selectOfficeList" resultMap="officeMap" parameterType="com.publiccms.domain.office.Office">
+        select
+        o.Id,
+        o.allow_to_create_house,
+        o.investor_type,
+        o.lockflag,
+        o.name,
+        o.name_en,
+        o.name_sp,
+        o.name_fl,
+        o.status,
+        o.modify_at,
+        o.lockflag,
+        o.priority,
+        o.city_id,
+        o.city_name,
+        o.circle_id,
+        o.circle_name,
+        o.district_id,
+        o.district_name
+        from office o
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="cityIds != null and cityIds != ''">
+                and o.city_id in (${cityIds})
+            </if>
+
+            <if test="id != null and id != 0">
+                and o.Id = #{id}
+            </if>
+
+            <if test="name != null and name != ''">
+                and ((o.name LIKE CONCAT('%',#{name},'%')) or (o.name_en LIKE CONCAT('%',#{name},'%')) or (o.name_sp LIKE CONCAT('%',#{name},'%')) or (o.name_fl LIKE CONCAT('%',#{name},'%')) )
+            </if>
+        </trim>
+        order by o.name asc limit 0,20
+    </select>
+
+    <select id="getOfficeAddData" resultMap="officeMap" parameterType="com.publiccms.domain.office.Office">
+        SELECT o.id, o.lockflag FROM office o
+        WHERE o.name = #{name} AND o.city_id=#{cityId}
+        AND (o.district_name LIKE CONCAT('%',#{districtName},'%') or #{districtName} LIKE CONCAT('%',o.district_name,'%'))
+    </select>
+
+</mapper>

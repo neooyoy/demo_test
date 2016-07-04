@@ -1,0 +1,1315 @@
+[@override name="title" ]大楼详情页[/@override]
+[@override name="css_or_script" ]
+<style>
+    .text-con{display:inline-block; width:170px; font-size:12px; color:#666;}
+    @media(max-width:480px){
+        .form-group{margin-bottom:0;}
+    }
+    *{margin:0;padding:0;}
+    .maskBox{display:none;overflow:hidden;}
+    .maskTab{display:table;width:100%;height:100%;position:fixed;left:0;top:0;z-index:9999;background:rgba(0,0,0,.5);}
+    .mask{display:table-cell;vertical-align:middle;text-align: center;}
+    .mask span{position:absolute;width:auto;height:auto;}
+    .mask span i{position:absolute;top:-17px;right:-20px;width:20px;height:20px;text-align: center;line-height:20px;background:#000;font-style:normal;color:#fff;cursor:pointer;}
+
+
+</style>[/@override]
+[@override name="content"]
+<form role="form" id="officeForm" method="post" [#if "${office.id}" == null] action="${base}/officeController/insertOffice" [/#if]
+[#if "${office.id}" != null] action="${base}/officeController/updateOffice" [/#if]>
+<input type="hidden" name="id" value="${office.id}">
+<div class="page-content">
+    <div class="panel">
+        <div class="panel-heading">
+            楼盘基础信息
+        </div>
+        <div class="panel-body panel-state1">
+
+            <div class="form-inline modal-open">
+                <div class="form-group">
+                    <label for="buildingName" class="text-right"><font color="#ff0000" style="margin: 10px">*</font>大楼名称</label>
+                    <input type="text" placeholder="请输入大楼名称" id="buildingName" class="form-control buildingName" name="name" value="${office.name}" style="width :170px;">
+                </div>
+                <div class="form-group">
+                    <label for="address" class="text-right"><font color="#ff0000" style="margin: 10px">*</font>详细地址 </label>
+                    <input type="text" placeholder="请输入详细地址" id="address" class="form-control address" name="address" value="${office.address}" maxlength="1000" style="width : 418px !important;">
+                </div>
+
+                <input type="hidden" id="user_cityIds" value="${user.cityPermissionsStr}">
+
+                <!--<input type="hidden" id="user_cityId" value="${user.cityId}">-->
+
+
+                <input type="hidden" id="cityId" name="cityId" value="${office.cityId}">
+                <input type="hidden" id="districtId" name="districtId" value="${office.districtId}">
+                <input type="hidden" id="circleId" name="circleId" value="${office.circleId}" >
+                <input type="hidden" id="cityName" name="cityName" value="${office.cityName}" >
+                <input type="hidden" id="districtName" name="districtName" value="${office.districtName}" >
+                <input type="hidden" id="circleName" name="circleName" value="${office.circleName}" >
+
+                <select id="city_combox_detail" combox="{
+                                                                        lable : '选择城市',
+                                                                        id : 'city_combox_detail',
+                                                                        showAll : false
+                                                                     }"></select>
+
+
+                <select id="district_combox_detail" combox="{
+                                                                            lable : '区域',
+                                                                            id : 'district_combox_detail',
+                                                                            showAll : false
+                                                                         }"></select>
+
+                <select id="businesscircle_combox_detail" combox="{
+                                                                                   lable : '商圈',
+                                                                                   id : 'businesscircle_combox_detail',
+                                                                                   showAll : false
+                                                                               }"></select>
+
+            </div>
+            <div class="form-inline">
+                <div class="form-group">
+                    <label for="managementLevel" class="text-right"><font color="#ff0000" style="margin: 10px">*</font>物业等级 </label>
+                    <select id="managementLevel" name="managementLevel" class="form-control">
+                        <option value="甲级" [#if "${office.managementLevel}"== "甲级"]  selected="selected"[/#if]>甲级</option>
+                        <option value="乙级" [#if "${office.managementLevel}"== "乙级"]  selected="selected"[/#if]>乙级</option>
+                        <option value="普通" [#if "${office.managementLevel}"== "普通"]  selected="selected"[/#if]>普通</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tel" class="text-right">租售热线</label>
+                    <input type="text" id="tel" class="form-control"  placeholder="请填写手机号/电话" name="tel" value="${office.tel}" maxlength="50">
+                </div>
+                <div class="form-group">
+                    <label for="investorType" class="text-right">业主类型</label>
+                    <select name="investorType" id="investorType"  class="form-control">
+                        <option value="1" [#if "${office.investorType}"== 1]  selected = "selected"[/#if]>大业主</option>
+                        <option value="2" [#if "${office.investorType}"== 2]  selected = "selected"[/#if]>小业主</option>
+                        <option value="3" [#if "${office.investorType}"== 3]  selected = "selected"[/#if]>大业主+小业主</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="investorContact" class="text-right">业主代表姓名</label>
+                    <input type="text" id="investorContact" class="form-control" placeholder="请填写业主代表姓名" name="investorContact" value="${office.investorContact}" maxlength="50">
+                </div>
+                <div class="form-group">
+                    <label for="investorJob" class="text-right">业主代表职位</label>
+                    <input type="text" id="investorJob" class="form-control" placeholder="请填写业主代表职位" name="investorJob" value="${office.investorJob}" maxlength="50">
+                </div>
+            </div>
+            <div class="form-inline">
+                <div class="form-group">
+                    <label for="investorContactphone" class="text-right">业主代表联系方式</label>
+                    <input type="text" id="investorContactphone" class="form-control" placeholder="请填写业主代表联系方式" name="investorContactphone" value="${office.investorContactphone}" maxlength="50">
+                </div>
+                <div class="form-group">
+                    <label for="groundfloor" class="text-right">地上层数</label>
+                    <input type="number" id="groundfloor" name="groundfloor" class="form-control" placeholder="请填写数字" value="${office.groundfloor}" min="0" max="999999999">
+                </div>
+                <div class="form-group">
+                    <label for="constructionRatio" class="text-right">得房率 </label>
+                                    <span style="position: relative; display: inherit;">
+                                        <input type="text" id="constructionRatio" name="constructionRatio" class="form-control" placeholder="请填写数字" value="${office.constructionRatio}">
+                                        <span style="position: absolute; top: 50%; right: 5px; padding-left: 0.5em; margin-top: -8px; background: #fff; font-size: 12px;">%</span>
+                                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="floorHeight" class="text-right">净层高 </label>
+                                     <span style="position: relative; display: inherit;">
+                                     <input type="text" id="floorHeight" name="floorHeight" class="form-control" placeholder="请填写数字" value="${office.floorHeight}">
+                                    <span style="position: absolute; top: 50%; right: 5px; padding-left: 0.5em; margin-top: -8px; background: #fff; font-size: 12px;">米</span>
+                                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="managementCompany" class="text-right">物业管理公司</label>
+                    <input type="text" id="managementCompany" name="managementCompany" class="form-control" placeholder="请填写物业管理公司" value="${office.managementCompany}" maxlength="100">
+                </div>
+            </div>
+            <div class="form-inline">
+                <div class="form-group">
+                    <label for="price" class="text-right">市场均价 </label>
+                                    <span style="position: relative; display: inherit;">
+                                    <input type="text" id="price" name="price" class="form-control" placeholder="请填写数字" value="${office.price}">
+                                    <span style="position: absolute; top: 50%; right: 5px; padding-left: 0.5em; margin-top: -8px; background: #fff; font-size: 12px;">元/天/平米</span>
+                                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="managementMoney" class="text-right">物业管理费 </label>
+                                    <span style="position: relative; display: inherit;">
+                                    <input type="text" id="managementMoney" name="managementMoney" class="form-control" placeholder="请填写数字" value="${office.managementMoney}">
+                                    <span style="position: absolute; top: 50%; right: 5px; padding-left: 0.5em; margin-top: -8px; background: #fff; font-size: 12px;">元/月/平米</span>
+                                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="customcatagory1" class="text-right">入住率第一的行业</label>
+                    <select name="customcatagory1" id="customcatagory1"  class="form-control">
+                        <option value="0" [#if "${office.customcatagory1}"== 0]  selected = "selected"[/#if]>其它</option>
+                        <option value="27" [#if "${office.customcatagory1}"== 27]  selected = "selected"[/#if]>金融, 投资及保险业</option>
+                        <option value="28" [#if "${office.customcatagory1}"== 28]  selected = "selected"[/#if]>IT及高科技</option>
+                        <option value="29" [#if "${office.customcatagory1}"== 29]  selected = "selected"[/#if]>汽车</option>
+                        <option value="30" [#if "${office.customcatagory1}"== 30]  selected = "selected"[/#if]>医药业</option>
+                        <option value="31" [#if "${office.customcatagory1}"== 31]  selected = "selected"[/#if]>专业服务业</option>
+                        <option value="32" [#if "${office.customcatagory1}"== 32]  selected = "selected"[/#if]>零售与快速消费品业</option>
+                        <option value="33" [#if "${office.customcatagory1}"== 33]  selected = "selected"[/#if]>制造业</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="customcatagory2" class="text-right">入住率第二的行业</label>
+                    <select name="customcatagory2" id="customcatagory2"  class="form-control">
+                        <option value="0" [#if "${office.customcatagory2}"== 0]  selected = "selected"[/#if] >其它</option>
+                        <option value="27" [#if "${office.customcatagory2}"== 27]  selected = "selected"[/#if]>金融, 投资及保险业</option>
+                        <option value="28" [#if "${office.customcatagory2}"== 28]  selected = "selected"[/#if]>IT及高科技</option>
+                        <option value="29" [#if "${office.customcatagory2}"== 29]  selected = "selected"[/#if]>汽车</option>
+                        <option value="30" [#if "${office.customcatagory2}"== 30]  selected = "selected"[/#if]>医药业</option>
+                        <option value="31" [#if "${office.customcatagory2}"== 31]  selected = "selected"[/#if]>专业服务业</option>
+                        <option value="32" [#if "${office.customcatagory2}"== 32]  selected = "selected"[/#if]>零售与快速消费品业</option>
+                        <option value="33" [#if "${office.customcatagory2}"== 33]  selected = "selected"[/#if]>制造业</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="customcatagory3" class="text-right">入住率第三的行业</label>
+                    <select name="customcatagory3" id="customcatagory3" class="form-control" >
+                        <option value="0" [#if "${office.customcatagory3}"== 0]  selected = "selected"[/#if]>其它</option>
+                        <option value="27" [#if "${office.customcatagory3}"== 27]  selected = "selected"[/#if]>金融, 投资及保险业</option>
+                        <option value="28" [#if "${office.customcatagory3}"== 28]  selected = "selected"[/#if]>IT及高科技</option>
+                        <option value="29" [#if "${office.customcatagory3}"== 29]  selected = "selected"[/#if]>汽车</option>
+                        <option value="30" [#if "${office.customcatagory3}"== 30]  selected = "selected"[/#if]>医药业</option>
+                        <option value="31" [#if "${office.customcatagory3}"== 31]  selected = "selected"[/#if]>专业服务业</option>
+                        <option value="32" [#if "${office.customcatagory3}"== 32]  selected = "selected"[/#if]>零售与快速消费品业</option>
+                        <option value="33" [#if "${office.customcatagory3}"== 33]  selected = "selected"[/#if]>制造业</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-inline">
+                <!--<div class="form-group">
+                    <label class="text-right">标签</label>
+                    <label  id="check3" class="btn btn-default" style="width:140px;">
+                        <input id="check3_input" onclick="checkInputClick(this.id)" name="tag" type="checkbox" value="3" datatext="互联网企业办公"> 互联网企业办公</label>
+
+                    <label  id="check4" class="btn btn-default" style="width:100px;display: none">
+                        <input id="check4_input" onclick="checkInputClick(this.id)" name="tag" type="checkbox" value="4" datatext="创业办公"> 创业办公</label>
+
+                    <label  id="check5" class="btn btn-default" style="width:120px;">
+                        <input id="check5_input" onclick="checkInputClick(this.id)" name="tag" type="checkbox" value="5" datatext="地标建筑精品"> 地标建筑精品</label>
+                    <label  id="check6" class="btn btn-default" style="width:140px;">
+                        <input id="check6_input" onclick="checkInputClick(this.id)" name="tag" type="checkbox" value="6" datatext="金融精英聚集地"> 金融精英聚集地</label>
+                    <label  id="check7" class="btn btn-default" style="width:120px;">
+                        <input id="check7_input" onclick="checkInputClick(this.id)" name="tag" type="checkbox" value="7" datatext="地铁5分种楼"> 地铁5分种楼</label>
+                    <label  id="check8" class="btn btn-default" style="width:100px;">
+                        <input id="check8_input" onclick="checkInputClick(this.id)" name="tag" type="checkbox" value="8" datatext="创意园区"> 创意园区</label>
+                    <label  id="check9"class="btn btn-default" style="width:120px;">
+                        <input id="check9_input" onclick="checkInputClick(this.id)" name="tag" type="checkbox" value="9" datatext="名企开发商"> 名企开发商</label>
+                    <label  id="check10" class="btn btn-default" style="width:80px;">
+                        <input id="check10_input" onclick="checkInputClick(this.id)" name="tag" type="checkbox" value="10" datatext="新楼"> 新楼</label>
+                    <label  id="check11" class="btn btn-default" style="width:100px;">
+                        <input id="check11_input" onclick="checkInputClick(this.id)" name="tag" type="checkbox" value="11" datatext="纳什空间"> 纳什空间</label>
+                    <label  id="check12"class="btn btn-default" style="width:80px;">
+                        <input id="check12_input" onclick="checkInputClick(this.id)" name="tag" type="checkbox" value="12" datatext="精选"> 精选</label>
+                    <label  id="check13" class="btn btn-default" style="width:100px;">
+                        <input id="check13_input" onclick="checkInputClick(this.id)" name="tag" type="checkbox" value="13" datatext="知名物业"> 知名物业</label>
+                    <label  id="check14" class="btn btn-default" style="width:105px;">
+                        <input id="check14_input" onclick="checkInputClick(this.id)" name="tag" type="checkbox" value="14" datatext="5A写字楼"> 5A写字楼</label>
+                    <label id="check15" class="btn btn-default" style="width:105px;">
+                        <input id="check15_input" onclick="checkInputClick(this.id)" name="tag" type="checkbox"
+                               value="15" datatext="健康空气"> 健康空气</label>
+                </div>-->
+
+                <input type="hidden" name="tags" id="tags" value="${tags}">
+
+				<div class="form-inline">
+
+                <div class="form-group">
+                    <label class="text-right">艺术标题 </label>
+                    <input class="form-control" rows="6" name="artremark" maxlength="30" value="${office.artremark}" style="width : 418px !important">
+                </div>
+
+                </div>
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label class="text-right"><font color="#ff0000" style="margin: 10px"></font>特色描述 </label>
+                        <textarea class="form-control" rows="6" name="description" style="width : 1293px !important" maxlength="9048">${office.description}</textarea>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+<div class="page-content">
+
+    <div class="panel">
+        <div class="panel-heading">
+            物业基础信息
+        </div>
+        <div class="panel-body panel-state1">
+            <div class="form-inline">
+                <div class="form-group">
+                    <label for="nameEn" class="text-right">英文名称</label>
+                    <input type="text" placeholder="" id="nameEn" class="form-control" name="nameEn" value="${office.nameEn}" maxlength="200">
+                </div>
+                <div class="form-group">
+                    <label for="nameSp" class="text-right">拼音名称</label>
+                    <input type="text" placeholder="" id="nameSp" class="form-control" name="nameSp" value="${office.nameSp}" maxlength="200">
+                </div>
+                <div class="form-group">
+                    <label for="nameFl" class="text-right">首字母名称</label>
+                    <input type="text" placeholder="" id="nameFl" class="form-control" name="nameFl" value="${office.nameFl}" maxlength="50">
+                </div>
+                <div class="form-group">
+                    <label for="developerCompany" class="text-right">开发商</label>
+                    <input type="text" placeholder="" id="developerCompany" class="form-control" name="developerCompany" value="${office.developerCompany}" maxlength="100">
+                </div>
+                <div class="form-group">
+                    <label for="investor" class="text-right">业主</label>
+                    <input type="text" placeholder="" id="investor" class="form-control" name="investor" value="${office.investor}" maxlength="100">
+                </div>
+                <div class="form-group">
+                    <label for="deliverDateStr" class="text-right">交付日期</label>
+                    <input type="text" placeholder="" id="deliverDateStr" class="form-control" name="deliverDateStr" value="${DeliverDate}" maxlength="100">
+                </div>
+                <div class="form-group">
+                    <label for="standardHeight" class="text-right">首层层高</label>
+                    <span style="position: relative; display: inherit;">
+                    <input type="text" placeholder="" id="firstFloorHeight" class="form-control" name="firstFloorHeight" value="${office.firstFloorHeight}">
+                    <span style="position: absolute; top: 50%; right: 5px; padding-left: 0.5em; margin-top: -8px; background: #fff; font-size: 12px;">米</span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-inline">
+                <div class="form-group">
+                    <label class="text-right">竣工时间</label>
+                    <input type="text" placeholder="" date="" class="form-control" style="width:170px;" id="completeTime"
+                           name="completeTime" value="${completeTime}">
+                </div>
+
+                <div class="form-group">
+                    <label for="landAreasize" class="text-right">占地面积</label>
+                                    <span style="position: relative; display: inherit;">
+                                    <input type="text" placeholder="" id="landAreasize" class="form-control" name="landAreasize" value="${office.landAreasize}">
+                                    <span style="position: absolute; top: 50%; right: 5px; padding-left: 0.5em; margin-top: -8px; background: #fff; font-size: 12px;">㎡</span>
+                                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="totalAreasize" class="text-right">总建面积</label>
+                                     <span style="position: relative; display: inherit;">
+                                      <input type="text" placeholder="" id="totalAreasize" class="form-control" name="totalAreasize" value="${office.totalAreasize}">
+                                    <span style="position: absolute; top: 50%; right: 5px; padding-left: 0.5em; margin-top: -8px; background: #fff; font-size: 12px;">㎡</span>
+                                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="buildingHeight" class="text-right">大楼总高</label>
+                    <input type="text" placeholder="" id="buildingHeight" class="form-control" name="buildingHeight" value="${office.buildingHeight}">
+                </div>
+                <div class="form-group">
+                    <label for="floorAreasize" class="text-right">标准层面积</label>
+                                     <span style="position: relative; display: inherit;">
+                                     <input type="text" placeholder="" id="floorAreasize" class="form-control" name="floorAreasize" value="${office.floorAreasize}">
+                                     <span style="position: absolute; top: 50%; right: 5px; padding-left: 0.5em; margin-top: -8px; background: #fff; font-size: 12px;">㎡</span>
+                                    </span>
+                </div>
+            </div>
+            <div class="form-inline">
+                <div class="form-group">
+                    <label for="undergroundfloor" class="text-right">地下楼层数</label>
+                    <input type="number" placeholder="" id="undergroundfloor" class="form-control" name="undergroundfloor" value="${office.undergroundfloor}" min="0" max="999999999"/>
+                </div>
+                <div class="form-group">
+                    <label for="plotRatio" class="text-right">容积率</label>
+                                    <span style="position: relative; display: inherit;">
+                                     <input type="text" placeholder="" id="plotRatio" class="form-control" name="plotRatio" value="${office.plotRatio}"/>
+                                    <span style="position: absolute; top: 50%; right: 5px; padding-left: 0.5em; margin-top: -8px; background: #fff; font-size: 12px;">%</span>
+                                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="remainderArea" class="text-right">可租售面积</label>
+                                    <span style="position: relative; display: inherit;">
+                                     <input type="text" placeholder="" id="remainderArea" class="form-control" name="remainderArea" value="${office.remainderArea}">
+                                    <span style="position: absolute; top: 50%; right: 5px; padding-left: 0.5em; margin-top: -8px; background: #fff; font-size: 12px;">㎡</span>
+                                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="parkingCount" class="text-right">停车位数量</label>
+                    <input type="number" placeholder="" id="parkingCount" class="form-control" name="parkingCount" value="${office.parkingCount}" min="0" max="999999999">
+                </div>
+                <div class="form-group">
+                    <label for="greeningRatio" class="text-right">绿化率</label>
+                                    <span style="position: relative; display: inherit;">
+                                    <input type="text" placeholder="" id="greeningRatio" class="form-control" name="greeningRatio" value="${office.greeningRatio}">
+                                    <span style="position: absolute; top: 50%; right: 5px; padding-left: 0.5em; margin-top: -8px; background: #fff; font-size: 12px;">%</span>
+                                    </span>
+                </div>
+            </div>
+            <div class="form-inline">
+                <div class="form-group">
+                    <label for="hot" class="text-right">热度</label>
+                    <input type="number" placeholder="" id="hot" class="form-control" name="hot" value="${office.hot}" min="0"  max="999999999">
+                </div>
+                <div class="form-group">
+                    <label for="designCompany" class="text-right">设计单位</label>
+                    <input type="text" placeholder="" id="designCompany" class="form-control" maxlength="100" name="designCompany" value="${office.designCompany}">
+                </div>
+                <div class="form-group">
+                    <label for="constructionCompany" class="text-right">建筑单位</label>
+                    <input type="text" placeholder="" id="constructionCompany" class="form-control" maxlength="100" name="constructionCompany" value="${office.constructionCompany}">
+                </div>
+                <div class="form-group">
+                    <label for="agentCompany" class="text-right">代理商</label>
+                    <input type="text" placeholder="" id="agentCompany" class="form-control" maxlength="100" name="agentCompany" value="${office.agentCompany}">
+                </div>
+                <div class="form-group">
+                    <label for="parkingFees" class="text-right">停车费用</label>
+                                    <span style="position: relative; display: inherit;">
+                                    <input type="text" placeholder="" id="parkingFees" class="form-control" name="parkingFees" value="${office.parkingFees}">
+                                    <span style="position: absolute; top: 50%; right: 5px; padding-left: 0.5em; margin-top: -8px; background: #fff; font-size: 12px;">元/月</span>
+                                    </span>
+                </div>
+            </div>
+            <div class="form-inline">
+                <div class="form-group">
+                    <label for="allowToCreateHouse" class="text-right">是否允许录入房源</label>
+                    <select name="allowToCreateHouse" id="allowToCreateHouse" class="form-control">
+                        <option value="0" [#if "${office.allowToCreateHouse}"== 0]  selected = "selected"[/#if] >允许</option>
+                        <option value="1" [#if "${office.allowToCreateHouse}"== 1]  selected = "selected"[/#if] >不允许</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="priority" class="text-right">是否优先</label>
+                    <select name="priority" id="priority" value="${office.priority}" class="form-control">
+                        <option value="1"  [#if "${office.priority}"== 1]  selected = "selected"[/#if] >否</option>
+                        <option value="0"   [#if "${office.priority}"== 0]  selected = "selected"[/#if] >是</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="standardHeight" class="text-right">标准层高</label>
+                                    <span style="position: relative; display: inherit;">
+                                    <input type="text" placeholder="" id="standardHeight" class="form-control" name="standardHeight" value="${office.standardHeight}">
+                                    <span style="position: absolute; top: 50%; right: 5px; padding-left: 0.5em; margin-top: -8px; background: #fff; font-size: 12px;">米</span>
+                                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="managementType" class="text-right"><font color="#ff0000" style="margin: 10px">*</font>物业类型 </label>
+                    <select name="managementType" id="managementType"  class="form-control">
+                        <option value="办公楼" [#if "${office.managementType}"== "办公楼"]  selected = "selected"[/#if]>办公楼</option>
+                        <option value="园区" [#if "${office.managementType}"== "园区"]  selected = "selected"[/#if]>园区</option>
+                        <option value="商住楼" [#if "${office.managementType}"== "商住楼"]  selected = "selected"[/#if]>商住楼</option>
+                        <option value="商务中心" [#if "${office.managementType}"== "商务中心"]  selected = "selected"[/#if]>商务中心</option>
+                        <option value="公寓" [#if "${office.managementType}"== "公寓"]  selected = "selected"[/#if]>公寓</option>
+                    </select>
+                </div>
+                  <!-- <div class="form-group">
+								<label for="isfull" class="text-right">是否满租</label>
+			                    <select name="isfull" id="isfull"  class="form-control">
+			                        <option value="0" [#if "${office.isfull}"== 0]  selected = "selected"[/#if]>未知</option>
+			                        <option value="1" [#if "${office.isfull}"== 1]  selected = "selected"[/#if]>在租</option>
+			                        <option value="2" [#if "${office.isfull}"== 2]  selected = "selected"[/#if]>满租</option>
+			                   	 </select>
+			                   </div>-->
+                            </div>
+							<!--<label for="lockChecked" class="text-right">是否核实锁盘信息</label>
+			                    <select name="lockChecked" id="lockChecked"  class="form-control">
+			                        <option value="0" [#if "${office.lockChecked}"== 0]  selected = "selected"[/#if]>未核实</option>
+			                        <option value="1" [#if "${office.lockChecked}"== 1]  selected = "selected"[/#if]>核实通过</option>
+			                        <option value="2" [#if "${office.lockChecked}"== 2]  selected = "selected"[/#if]>核实不通过</option>
+			                    </select>-->
+
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label class="text-right"><font color="#ff0000" style="margin: 10px"></font>开发商介绍 </label>
+                        <textarea class="form-control" rows="6" name="developerIntroduction" style="width : 1293px !important" maxlength="9048">${office.developerIntroduction}</textarea>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+<div class="page-content">
+
+    <div class="panel">
+        <div class="panel-heading">
+            技术指标
+        </div>
+        <div class="panel-body panel-state1">
+            <div class="form-inline modal-open">
+                <div class="form-group">
+                    <label for="liftBrand" class="text-right">电梯品牌</label>
+                    <input type="text" placeholder="" id="liftBrand" class="form-control" name="liftBrand" value="${office.liftBrand}" maxlength="1000">
+                </div>
+                <div class="form-group">
+                    <label for="liftCount" class="text-right">电梯数量</label>
+                    <input type="text" placeholder="" id="liftCount" class="form-control" name="liftCount" value="${office.liftCount}" maxlength="1000">
+                </div>
+                <div class="form-group">
+                    <label for="liftPartition" class="text-right">电梯分区</label>
+                    <input type="text" placeholder="" id="liftPartition" class="form-control" name="liftPartition" value="${office.liftPartition}" maxlength="100">
+                </div>
+                <div class="form-group">
+                    <label for="goodsliftcount" class="text-right">货梯数</label>
+                    <input type="text" placeholder="" id="goodsliftcount" class="form-control" name="goodsliftcount" value="${office.goodsliftcount}" maxlength="100">
+                </div>
+
+                <div class="form-group">
+                    <label for="airconditionerSystem" class="text-right">空调系统</label>
+                    <select name="airconditionerSystem" id="airconditionerSystem"  class="form-control">
+                        <option value="集中式中央空调" [#if "${office.airconditionerSystem}"== "集中式中央空调"]  selected = "selected"[/#if]>集中式中央空调</option>
+                        <option value="半集中式中央空调" [#if "${office.airconditionerSystem}"== "半集中式中央空调"]  selected = "selected"[/#if]>半集中式中央空调</option>
+                        <option value="分体式空调" [#if "${office.airconditionerSystem}"== "分体式空调"]  selected = "selected"[/#if]>分体式空调</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-inline">
+                <div class="form-group">
+                    <label for="airconditionerBrand" class="text-right">空调品牌</label>
+                    <input type="text" placeholder="" id="airconditionerBrand" class="form-control" name="airconditionerBrand" value="${office.airconditionerBrand}" maxlength="1000">
+                </div>
+                <div class="form-group">
+                    <label for="airconditionerCount" class="text-right">空调数量</label>
+                    <input type="text" placeholder="" id="airconditionerCount" class="form-control" name="airconditionerCount" value="${office.airconditionerCount}" maxlength="1000">
+                </div>
+                <div class="form-group">
+                    <label for="netsystem" class="text-right">网络通讯系统</label>
+                    <input type="text" placeholder="" id="netsystem" class="form-control" name="netsystem" value="${office.netsystem}" maxlength="1000">
+                </div>
+                <div class="form-group">
+                    <label for="bathroom" class="text-right">卫生间</label>
+                    <input type="text" placeholder="" id="bathroom" class="form-control" name="bathroom" value="${office.bathroom}" maxlength="1000">
+                </div>
+            </div>
+            <div class="form-inline">
+                <div class="form-group">
+                    <label for="smartdevices" class="text-right">智能设施</label>
+                    <input type="text" placeholder="" id="smartdevices" class="form-control" name="smartdevices" value="${office.smartdevices}" maxlength="1000">
+                </div>
+                <div class="form-group">
+                    <label for="outerWall" class="text-right">外墙</label>
+                    <input type="text" placeholder="" id="outerWall" class="form-control" name="outerWall" value="${office.outerWall}" maxlength="1000">
+                </div>
+                <div class="form-group">
+                    <label for="porch" class="text-right">公共走道</label>
+                    <input type="text" placeholder="" id="porch" class="form-control" name="porch" value="${office.porch}" maxlength="1000">
+                </div>
+                <div class="form-group">
+                    <label for="vent" class="text-right">换气窗</label>
+                    <select name="vent" id="vent"  class="form-control">
+                        <option value="有" [#if "${office.vent}"== "有"]  selected = "selected"[/#if]>有</option>
+                        <option value="无" [#if "${office.vent}"== "无"]  selected = "selected"[/#if]>无</option>
+                    </select>
+                    <!--  <input type="radio" name="vent" value="有" required class="form-control" <c:if test="${office.vent=='有'}" checked="checked"/>
+                            </label>有</label>
+                            <label><input type="radio" name="vent" value="无" required  class="form-control" <c:if test="${office.vent=='无'}" checked="checked"/>
+                            </label><label>无</label> -->
+                </div>
+                <div class="form-group">
+                    <label for="satellite" class="text-right">卫星电视</label>
+                    <select name="satellite" id="satellite"  class="form-control">
+                        <option value="有" [#if "${office.satellite}"== "有"]  selected = "selected"[/#if]>有</option>
+                        <option value="无" [#if "${office.satellite}"== "无"]  selected = "selected"[/#if]>无</option>
+                    </select>
+                    <!--            <label><input type="radio" name="satellite" value="有" required class="form-control" <c:if test="${office.satellite=='有'}" checked="checked"/>
+                            </label>有</label>
+                            <label><input type="radio" name="satellite" value="无" required  class="form-control" <c:if test="${office.satellite=='无'}" checked="checked" /></label><label>无</label> -->
+                </div>
+            </div>
+            <div class="form-inline">
+
+                <div class="form-group">
+                    <label for="aerationSystem" class="text-right" >新风系统</label>
+                    <select name="aerationSystem" id="aerationSystem"  class="form-control">
+                        <option value="有" [#if "${office.aerationSystem}"== "有"]  selected = "selected"[/#if]>有</option>
+                        <option value="无" [#if "${office.aerationSystem}"== "无"]  selected = "selected"[/#if]>无</option>
+                    </select>
+                    <!--   <label><input type="radio" name="aerationSystem" value="有" required class="form-control" <c:if test="${office.aerationSystem=='有'}" checked="checked" />
+                            </label>有</label>
+                            <label><input type="radio" name="aerationSystem" value="无" required class="form-control" <c:if test="${office.aerationSystem=='无'}" checked="checked"/></label><label>无</label> -->
+                </div>
+                <div class="form-group">
+                    <label for="airconditionerOvertimebill" class="text-right">加时空调费用</label>
+                    <input type="text" placeholder="" id="airconditionerOvertimebill" class="form-control"
+                           name="airconditionerOvertimebill" value="${office.airconditionerOvertimebill}" maxlength="1000">
+                </div>
+                <div class="form-group">
+                    <label for="airconditionerOpen" class="text-right">空调开放时间</label>
+                    <input type="text" placeholder="" id="airconditionerOpen" class="form-control"
+                           name="airconditionerOpen" value="${office.airconditionerOpen}" maxlength="1000">
+                </div>
+                <div class="form-group">
+                    <label for="phonebill" class="text-right">电话费用</label>
+                    <input type="text" placeholder="" id="phonebill" class="form-control" name="phonebill" value="${office.phonebill}" maxlength="1000">
+                </div>
+                <div class="form-group">
+                    <label for="lobbyheight" class="text-right">大堂挑高</label>
+                    <input type="text" placeholder="" id="lobbyheight" class="form-control" name="lobbyheight" value="${office.lobbyheight}" maxlength="1000">
+                </div>
+                <div class="col-lg-12 text-center">
+                    [#if "${office.id}" == null]
+                    <button type="submit" class="btn btn-blue btn-special" value="提交" onclick="saveOfficeTagData()">提交</button>
+                    [/#if]
+                    [#if "${office.id}" != null && ("${user.id}" == "${office.accendantId}" || "${user.roleId}" == "1")]
+                        <button type="submit" class="btn btn-blue btn-special" value="保存楼盘信息" onclick="saveOfficeTagData()">保存楼盘信息</button>
+                        [#if "${office.status}" == 0]
+                        <span>
+                        <button type="button" class="btn btn-blue btn-special" value="发布" onclick="fabu()" >发布</button>
+                        [/#if]
+                        [#if "${office.status}" == 1]
+                        <button type="button" class="btn btn-blue btn-special" value="取消发布" onclick="quxiaofabu()">取消发布</button>
+                        [/#if]
+                        </span>
+                    [/#if]
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#officeForm')
+                        .formValidation({
+                            err: {
+                                container: 'tooltip'
+                            },
+                            icon: {
+                                valid: 'glyphicon glyphicon-ok',
+                                invalid: 'glyphicon glyphicon-remove',
+                                validating: 'glyphicon glyphicon-refresh'
+                            },
+                            fields: {
+                                name: {
+                                    validators: {
+                                        notEmpty: {
+                                            message: '大楼名称不能为空'
+                                        },
+                                        stringLength: {
+                                            min: 1,
+                                            max: 30,
+                                            message: '大楼名称长度不能超过30'
+                                        }
+                                    }
+                                },
+                                address: {
+                                    validators: {
+                                        notEmpty: {
+                                            message: '详细地址不能为空'
+                                        }
+                                    }
+                                },
+                                constructionRatio:{
+                                    validators:{
+                                        numeric:{
+                                            message: '得房率为不大于100的浮点数'
+                                        },
+                                        between:{
+                                            max:100,
+                                            min:0,
+                                            message: '得房率为0-100的浮点数'
+                                        }
+                                    }
+                                },
+                                floorHeight:{
+                                    validators:{
+                                        between:{
+                                            max:999999999,
+                                            min:0,
+                                            message: '请输入正确项'
+                                        }
+                                    }
+                                },
+                                firstFloorHeight:{
+                                    validators:{
+                                        between:{
+                                            max:999999999,
+                                            min:0,
+                                            message: '请输入正确项'
+                                        }
+                                    }
+                                },
+                                price:{
+                                    validators:{
+                                        between:{
+                                            max:999999999,
+                                            min:0,
+                                            message: '请输入正确项'
+                                        }
+                                    }
+                                },
+                                managementMoney:{
+                                    validators:{
+                                        between:{
+                                            max:999999999,
+                                            min:0,
+                                            message: '请输入正确项'
+                                        }
+                                    }
+                                },
+                                landAreasize:{
+                                    validators:{
+                                        between:{
+                                            max:999999999,
+                                            min:0,
+                                            message: '请输入正确项'
+                                        }
+                                    }
+                                },
+                                totalAreasize:{
+                                    validators:{
+                                        between:{
+                                            max:999999999,
+                                            min:0,
+                                            message: '请输入正确项'
+                                        }
+                                    }
+                                },
+                                buildingHeight:{
+                                    validators:{
+                                        between:{
+                                            max:999999999,
+                                            min:0,
+                                            message: '请输入正确项'
+                                        }
+                                    }
+                                },
+                                floorAreasize:{
+                                    validators:{
+                                        between:{
+                                            max:999999999,
+                                            min:0,
+                                            message: '请输入正确项'
+                                        }
+                                    }
+                                },
+                                plotRatio:{
+                                    validators:{
+                                        between:{
+                                            max:100,
+                                            min:0,
+                                            message: '容积率为0-100的浮点数'
+                                        }
+                                    }
+                                },
+                                remainderArea:{
+                                    validators:{
+                                        between:{
+                                            max:999999999,
+                                            min:0,
+                                            message: '请输入正确项'
+                                        }
+                                    }
+                                },
+                                greeningRatio:{
+                                    validators:{
+                                        between:{
+                                            max:100,
+                                            min:0,
+                                            message: '绿化率为0-100的浮点数'
+                                        }
+                                    }
+                                },
+                                parkingFees:{
+                                    validators:{
+                                        between:{
+                                            max:999999999,
+                                            min:0,
+                                            message: '请输入正确项'
+                                        }
+                                    }
+                                },
+                                standardHeight:{
+                                    validators:{
+                                        between:{
+                                            max:999999999,
+                                            min:0,
+                                            message: '请输入正确项'
+                                        }
+                                    }
+                                },
+                                description:{
+                                    validators:{
+                                        stringLength: {
+                                            max: 10000,
+                                            message: '特色描述长度不能超过10000'
+                                        }
+                                    }
+                                },
+                                developerIntroduction:{
+                                    validators:{
+                                        stringLength: {
+                                            max: 10000,
+                                            message: '开发商介绍长度不能超过10000'
+                                        }
+                                    }
+                                }
+
+                            }
+                        })
+                $('#officePmForm')
+                        .formValidation({
+                            err: {
+                                container: 'tooltip'
+                            },
+                            icon: {
+                                valid: 'glyphicon glyphicon-ok',
+                                invalid: 'glyphicon glyphicon-remove',
+                                validating: 'glyphicon glyphicon-refresh'
+                            },
+                            fields: {
+                                highFloor: {
+                                    validators: {
+                                        notEmpty: {
+                                            message: '高层不能为空'
+                                        },
+                                        between:{
+                                            max:999999999,
+                                            min:0,
+                                            message: '请输入正确项'
+                                        }
+                                    }
+                                },
+                                middleFloor: {
+                                    validators: {
+                                        notEmpty: {
+                                            message: '中层不能为空'
+                                        },
+                                        between:{
+                                            max:999999999,
+                                            min:0,
+                                            message: '请输入正确项'
+                                        }
+                                    }
+                                },
+                                lowFloor: {
+                                    validators: {
+                                        notEmpty: {
+                                            message: '低层不能为空'
+                                        },
+                                        between:{
+                                            max:999999999,
+                                            min:0,
+                                            message: '请输入正确项'
+                                        }
+                                    }
+                                },
+                                highFloorPm:{
+                                    validators: {
+                                        notEmpty: {
+                                            message: '高层pm2.5不能为空'
+                                        },
+                                        between:{
+                                            max:999999999,
+                                            min:0,
+                                            message: '请输入正确项'
+                                        }
+                                    }
+                                },
+                                middleFloorPm:{
+                                    validators: {
+                                        notEmpty: {
+                                            message: '中层pm2.5不能为空'
+                                        },
+                                        between:{
+                                            max:999999999,
+                                            min:0,
+                                            message: '请输入正确项'
+                                        }
+                                    }
+                                },
+                                lowFloorPm:{
+                                    validators: {
+                                        notEmpty: {
+                                            message: '低层pm2.5不能为空'
+                                        },
+                                        between:{
+                                            max:999999999,
+                                            min:0,
+                                            message: '请输入正确项'
+                                        }
+                                    }
+                                },
+                                outdoorPmAvg:{
+                                    validators: {
+                                        notEmpty: {
+                                            message: '室外pm2.5不能为空'
+                                        },
+                                        between:{
+                                            max:999999999,
+                                            min:0,
+                                            message: '请输入正确项'
+                                        }
+                                    }
+                                },
+                                personName:{
+                                    validators: {
+                                        notEmpty: {
+                                            message: '检测人不能为空'
+                                        }
+                                    }
+                                },
+                                indoorPmAvg:{
+                                    validators: {
+                                        notEmpty: {
+                                            message: '室内PM2.5值不能为空'
+                                        }
+                                    }
+                                },
+                                removalRate:{
+                                    validators: {
+                                        notEmpty: {
+                                            message: '去除率不能为空'
+                                        }
+                                    }
+                                }
+                            }
+                        })
+            });
+        </script>
+
+
+[#if "${createflag}"=="mod"]
+<div class="page-content">
+    <div class="panel">
+        <div class="panel-heading">
+            图片
+        </div>
+        <div class="panel-body panel-state1">
+            <form role="form" method="get" action="">
+                [#list imgArry as imgArry]
+                <div class="form-inline modal-open" id="${office.id}">
+
+                    [#if "${user.id}" == "${office.accendantId}" || "${user.roleId}" == "1"]
+                    <div class="form-group">
+                        <label class="text-right label-horizontal"><b>${imgArry?split(",")[1]}</b></label>
+                        <a class="btn-file" href="javascript:void(0);">
+                        <span><i class="fa fa-pic"></i>&nbsp;上传${imgArry?split(",")[1]}</span>
+                        <input type="file" name="file" multiple="true" data-url="${base}/officeimgsController/addImgs?officeId=${office.id}&callback=buildingimg&imgtype=${imgArry?split(',')[0]}&is3d=${imgArry?split(',')[2]}" >
+                    </a>
+                    [/#if]
+
+                        <!--<span>您已上传 <b class="text-red">3</b> 个文件，还能上传 <b class="text-red">2</b> 个文件。</span>-->
+                    </div>
+                    <div class="pic-box " id="pic-box_${imgArry?split(',')[0]}">
+                        [#list acquireimg as acquireimg]
+                        [#if acquireimg.imgtype==imgArry?split(",")[0]]
+                        <div class="pic-group imgBox" id="imgid_${acquireimg.id}">
+                            <img src="http://${pictureUrl}/${acquireimg.imgpath}${picLastList}" width="170" height="114">
+
+                            [#if "${user.id}" == "${office.accendantId}" || "${user.roleId}" == "1"]
+                            <button type="button" class="btn btn-delete" imgid="${acquireimg.id}"><i class="fa fa-cross" ></i></button>
+                            [/#if]
+
+                            [#if imgArry?split(",")[0]=="7"]
+                            <input value="${acquireimg.imgDesc}" type="text" name="imgDesc" id="desc_${acquireimg.id}" class="form-control" style="display: block" placeholder="请填写描述">
+                            <button type="button" name="savedb"  id="${acquireimg.id}">保存</button>
+                            [/#if]
+
+                        </div>
+                        [/#if]
+                        [/#list]
+                    </div>
+                    <hr>
+                </div>
+                [/#list]
+            </form>
+        </div>
+    </div>
+</div>
+[/#if]
+<div class="modal fade" id="uploadprocess" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    上传进度
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="60"
+                         aria-valuemin="0" aria-valuemax="100" id="processbar">
+                        <span id="processbartxt">0% 完成</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    提示
+                </h4>
+            </div>
+            <div class="modal-body"><strong id="modaltxt"></strong>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">否
+                </button>
+                <button type="button" class="btn btn-primary" id="jumpbtn">是
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+</div>
+<div class="modal fade" id="myModal_1" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    <font id="mes_danwenjian" >描述保存成功</font>
+                </h4>
+            </div>
+            <div class="modal-body"><strong id="modaltxt"></strong>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+</div>
+<div class="maskBox">
+    <div class="maskTab">
+        <div class="mask">
+            <img src="" alt="存放点击大图">
+            <span class="close"><i>X</i></span>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="${jspath}/resources/js/office/fangyuan1.js?${staticversion}"></script>
+${msg}
+${successful}
+${error}
+<script type="text/javascript">
+    $(function (){
+        $('[name=deliverDateStr]').datepicker({
+            format : 'yyyy-mm-dd',
+            todayHighlight:true,
+            todayBtn:'linked'
+        });
+        var officePmId = $("#officePmId").val();
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth()+1;
+        var day = date.getDate();
+        var riqi = year+"-"+month+"-"+day;
+        if(officePmId == null || officePmId == ""){
+            $("#removalRate").val("0");
+            $("#indoorPmAvg").val("0");
+            $("#accendantAt").val(riqi);
+        }
+    })
+
+    function changepm(){
+        var highFloorPm = 0;
+        var middleFloorPm = 0;
+        var lowFloorPm = 0;
+        if ($("#highFloorPm").val() != null && $("#highFloorPm").val() != ''){
+            highFloorPm = parseInt($("#highFloorPm").val());
+        }
+        if ($("#middleFloorPm").val() != null && $("#middleFloorPm").val() != ''){
+            middleFloorPm = parseInt($("#middleFloorPm").val());
+        }
+        if ($("#lowFloorPm").val() != null && $("#lowFloorPm").val() != ''){
+            lowFloorPm = parseInt($("#lowFloorPm").val());
+        }
+        var indoorPmAvg=parseInt(((highFloorPm + middleFloorPm + lowFloorPm)/3).toFixed(0));
+        $("#indoorPmAvg").val(indoorPmAvg);
+        $("#officePmForm").data("formValidation").validateField($("#indoorPmAvg"));
+
+	 	var outdoorPmAvg = 0;
+		if ($("#outdoorPmAvg").val() != null && $("#outdoorPmAvg").val() != ''){
+			outdoorPmAvg = parseInt($("#outdoorPmAvg").val());
+		}
+	 	if (indoorPmAvg != null && indoorPmAvg != '' &&  outdoorPmAvg != null && outdoorPmAvg != ''){
+	 		if(outdoorPmAvg < indoorPmAvg){
+	 			alert("室外PM值要大于室内PM2.5值");
+	 			$("#outdoorPmAvg").val("");
+	 		}else{
+	 			 removalRate = parseInt((outdoorPmAvg - indoorPmAvg) / outdoorPmAvg * 100);
+	 		 	$("#removalRate").val(removalRate);
+	 		}
+		}
+	   $("#officePmForm").data("formValidation").validateField($("#removalRate"));
+	 	/* var validate = $("#officePmForm").data("formValidation").isValid(); */
+
+	   if($("#indoorPmAvg").val() == "" || $("#indoorPmAvg").val() == "NaN"){
+	 		$("#indoorPmAvg").val(0);
+	 	}
+
+	 	if($("#removalRate").val() == "NaN" || $("#removalRate").val() == "" ){
+	 		$("#removalRate").val(0);
+	 	}
+	}
+
+	function changepmTime(){
+		 if ($("#accendantAt").val() == ""){
+			alert("检测时间不能为空");
+			return false;
+		}
+
+        if ($('#accendantId').val() != $('#personName').combobox('getValue')){
+            if ($('#accendantName').val() == $('#personName').combobox('getValue')){
+                return;
+            }
+            alert("请选择检测人");
+            return false;
+        }
+	}
+	 $(function(){
+	        $(".modifyAt").each(function(){
+	            $(this).html(dateMinuteToDate(parseInt($(this).html())));
+	        })
+	    });
+</script>
+[#if "${office.id}" != null]
+<script type="text/javascript">
+    function fabu() {
+        var id = ${office.id};
+        var url = "${base}/officeController/updateFabu"
+        window.location.href=url+"?id="+id;
+    }
+    function quxiaofabu() {
+        var id = ${office.id};
+        var url = "${base}/officeController/updateQuXiaoFaBu"
+        window.location.href=url+"?id="+id;
+    }
+</script>
+[/#if]
+
+<!--    <script type="application/javascript" src="${jspath}/resources/js/jquery-1.10.2.min.js"></script> -->
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=57b4dbd0d142e9649ed54160b45ecb1f"></script>
+<script type="application/javascript">
+    $(function () {
+        //var cityid = '${office.cityId}';
+        var defaultpoint = {
+            "east":'${office.mapX}',//已经拥有的坐标mapx
+            "north":'${office.mapY}',//已经拥有的坐标mapy
+            "address":"${office.address}",//详细地址
+            "cityname": $.trim("${office.cityName}"),//城市名称
+            "default_east":116.404,//默认坐标
+            "default_north":39.915,//默认坐标
+            "divid":"allmap"
+        }
+        var map = null;
+        var marker = null;
+        map = new BMap.Map(defaultpoint.divid);
+        map.enableScrollWheelZoom(true);
+        map.addControl(new BMap.NavigationControl());
+        map.addControl(new BMap.ScaleControl());
+        map.addControl(new BMap.OverviewMapControl());
+        map.addControl(new BMap.MapTypeControl());
+        if (defaultpoint.east!=0.0 && defaultpoint.north!=0.0 ) {
+            console.log('经纬定位ok');
+            map.centerAndZoom(new BMap.Point(defaultpoint.east, defaultpoint.north), 13);
+            marker = new BMap.Marker(map.getCenter());
+            marker.enableDragging();
+            map.addOverlay(marker);
+        }
+        else if(defaultpoint.address!='') {
+            var myGeo = new BMap.Geocoder();
+            // 将地址解析结果显示在地图上，并调整地图视野
+            myGeo.getPoint(defaultpoint.address, function (point) {
+                if (point) {
+                    map.centerAndZoom(point, 13);
+                } else {
+                    map.centerAndZoom(new BMap.Point(defaultpoint.default_east, defaultpoint.default_north), 13);
+                }
+                marker = new BMap.Marker(map.getCenter());
+                marker.enableDragging();
+                map.addOverlay(marker);
+            }, defaultpoint.cityname);
+        }
+        else{
+            map.centerAndZoom(new BMap.Point(defaultpoint.default_east, defaultpoint.default_north), 13);
+            marker = new BMap.Marker(map.getCenter());
+            marker.enableDragging();
+            map.addOverlay(marker);
+        }
+        $('#btn').click(function () {
+            $("#btn").attr({"disabled":"disabled"});
+            var p = (marker.getPosition());
+            $.ajax({
+                url: '${base}/officeController/saveMap',
+                type: 'post',
+                datetype: 'json',
+                data: {
+                    id: '${office.id}',
+                    mapX: p.lng,
+                    mapY: p.lat,
+                    cityId: $('#cityId').val()
+                },
+                success: function (data) {
+                    if(data=="success"){
+                        alert("保存成功");
+                        $("#btn").removeAttr("disabled");
+                    }
+                }
+            });
+        });
+    });
+</script>
+<script type="application/javascript">
+
+    var gcount = 0;
+    function bindDelete() {
+        $(".btn-delete").click(function () {
+            var id = $(this).attr("imgid")
+            $('#modaltxt').text('是否删除当前图片');
+            $('#myModal').modal('show');
+            $('#jumpbtn').unbind();
+            $('#jumpbtn').click(function () {
+                $('#myModal').modal('hide');
+                //delete image to action
+                $.ajax({
+                    url: '${base}/officeimgsController/deleteBuildingImages',
+                    type: 'post',
+                    data: {id: id},
+                    success: function (data) {
+                        if (data.success == 'ok') {
+                            $("#imgid_" + data.imgid).hide();
+                        }
+                    }
+                })
+            });
+        });
+    }
+    function  svaeImgDesc() {
+        $('[name=savedb]').click(function () {
+            var id = $(this).attr('id');
+            var desc = $('#desc_' + id).val();
+            $.ajax({
+                url: '${base}/officeimgsController/saveImagesDescription',
+                type: 'post',
+                data: {id: id, imgDesc: desc},
+                success: function (data) {
+                    if (data.success == "ok") {
+                        $('#myModal_1').modal('show');
+                        setTimeout(function(){
+                            $('#myModal_1').modal('hide');
+                        },1000)
+                    }
+                }
+            })
+        })
+    }
+    $(function(){
+        bindDelete();
+        svaeImgDesc();
+        bigPicture();
+    });
+    var gcount = 0;
+    $('[name="file"]').fileupload({
+        dataType: "json",
+        done: function (e, data) {
+            if (data.result.success == 'ok') {
+
+
+                var imgdesc='<div class="pic-group imgBox " id="imgid_'+data.result.imgid+'">'+
+                        '<img src="http://${pictureUrl}/'+data.result.path+'${picLastList}" width="170" height="114">'+
+                        '<button type="button" class="btn btn-delete" imgid="'+data.result.imgid+'"><i class="fa fa-cross" ></i></button>'+
+                '</div>';
+                var  node='<div class="pic-group imgBox" id="imgid_'+data.result.imgid+'">'+
+                        '<img src="http://${pictureUrl}/'+data.result.path+'${picLastList}" width="170" height="114">'+
+                        '<button type="button" class="btn btn-delete" imgid="'+data.result.imgid+'" ><i class="fa fa-cross" ></i></button>'+
+                '<input  type="text" name="imgDesc" id="desc_'+data.result.imgid+'" class="form-control" style="display: block" placeholder="请填写描述">'+
+                '<button type="button" name="savedb" class="btn btn-save" id="'+data.result.imgid+'">保存</button>'+
+                '</div>';
+                if (data.result.type==7) {
+                    $("#pic-box_" + data.result.type).append(node);
+                }
+                else
+                {
+                    $("#pic-box_" + data.result.type).append(imgdesc);
+                }
+                bindDelete();
+                svaeImgDesc();
+                bigPicture();
+                gcount--;
+                if (gcount == 0) {
+                    $('#uploadprocess').modal('hide');
+                }
+            }
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            if (progress <= 99) {
+                $('#processbar').css('width', progress + '%');
+                $('#processbartxt').text(progress + '%');
+            } else {
+                $('#processbar').css('width', '99%');
+                $('#processbartxt').text('99%');
+            }
+        },
+        add: function (e, data) {
+            for (var f in data.originalFiles) {
+                if (data.originalFiles[f]['size'] > 1024 * 1024 * 40) {
+                    alert(data.originalFiles[f]['name'] + '图片太大无法上传！');
+                    return;
+                }
+            }
+            if ($('#uploadprocess').css('display') == 'none') {
+                $('#uploadprocess').modal('show');
+                //50秒强制关闭模态框
+                setTimeout(function () {
+                    if ($('#uploadprocess').css('display') != 'none') {
+                        $('#uploadprocess').modal('hide');
+                    }
+                }, 5000);
+            }
+            gcount++;
+            data.submit();
+        }
+    });
+
+
+
+    function  bigPicture() {
+        $(".imgBox").on("click",'img',function(){
+            clickBig($(this))
+        });
+
+        function clickBig(e){
+            var W = $(window).width();
+            var H = $(window).height();
+            $(".maskBox").css({"width":W,"height":H,"display":"block"});
+            var srcSmall = e.attr('src');
+            var imgBig   = $(".maskBox").find('img');
+            imgBig.attr('src',srcSmall);
+        }
+        //点击X 关闭
+        $(".close").on("click","i",function(){
+            $(this).parents(".maskBox").fadeOut();
+        });
+        //点击遮罩层 关闭
+        $(".maskBox").click(function(){
+            $(this).css("display","none");
+        });
+    }
+</script>
+[/@override]
+[@extends name="views/base.html"/]

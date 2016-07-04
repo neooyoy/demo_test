@@ -1,0 +1,44 @@
+[@override name="title" ]角色管理[/@override]
+[@override name="css_or_script" ][/@override]
+[@override name="content"]
+
+<div class="page-content">
+    <div class="panel">
+        <div class="panel-heading">
+            角色列表
+        </div>
+
+        <div class="page-content">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="row negative-margin">
+
+                        <table id="role_grid" class="table table-hover table-striped table-bordered table-advanced tablesorter"
+                               cellpadding="1" cellspacing="0" align="center" bordercolor="#D4DBE1"
+                               style="border-collapse: collapse; width: 100%;">
+                            <thead gdthead="role_grid">
+                            <tr>
+                                <th name="orderSource"><span>角色名称</span></th>
+                                <th name="status"><span>当前人数</span></th>
+                            </tr>
+                            </thead>
+                            <tbody gdtbody="role_grid">
+
+
+                            [#list roles as role]
+                            <tr trrownumber="1" style="background-color:white">
+                                <td>${role.roleName}</td>
+                                <td><a href="${base}/system/user?roleId=${role.roleId}"class="unline" style="cursor:pointer;"> <font color='#28a4c9'>${role.personCount}</font></a></td>
+                            </tr>
+                            [/#list]
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+[/@override]
+[@extends name="views/base.html"/]
