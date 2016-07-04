@@ -397,7 +397,7 @@
 				<sso.login.url.login>/login?backurl=#domain#/sso/login</sso.login.url.login>
 				<sso.login.cookie.name>corp_sign_test</sso.login.cookie.name>
 				<sso.login.sys.key>crm_index</sso.login.sys.key>
-				<sso.login.sys.token>n0ZkGSdx35PT6fAF</sso.login.sys.token>
+				<sso.login.sys.token>fdsghfd32432</sso.login.sys.token>
 				<sso.user.signin.url>/api/sysusersadd</sso.user.signin.url>
 
 				<!-- #db config -->
@@ -406,9 +406,9 @@
 				<maxActive>5</maxActive>
 
 				<!-- master -->
-				<officebuilding.connection.url.master>jdbc:mysql://xiaowangzhan.mysql.rds.aliyuncs.com:3306/xiaowangzhan?characterEncoding=UTF8</officebuilding.connection.url.master>
-				<officebuilding.connection.username.master>zhangjinglei</officebuilding.connection.username.master>
-				<officebuilding.connection.password.master>xwz20160701!</officebuilding.connection.password.master>
+				<officebuilding.connection.url.master>jdbc:mysql://localhost:3306/demo?characterEncoding=UTF8</officebuilding.connection.url.master>
+				<officebuilding.connection.username.master>demo</officebuilding.connection.username.master>
+				<officebuilding.connection.password.master>demo!</officebuilding.connection.password.master>
 
 				<log.level>debug</log.level>
 
@@ -417,7 +417,7 @@
 
 				<jspath>http://demo.com</jspath>
 				<session.prefix>demo_sessionid_</session.prefix>
-				<session.token>J34I7F2fHCkEeMVB</session.token>
+				<session.token>fdsafdsafe3423</session.token>
 				<static.version>0</static.version>
 
 				<pictureUrl>7xvsql.com1.z0.glb.clouddn.com</pictureUrl>
