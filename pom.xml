@@ -393,11 +393,11 @@
 			<id>local</id>
 			<properties>
 				<!-- sso -->
-				<sso.login.url.root>http://sso.test.corp.uban.com</sso.login.url.root>
+				<sso.login.url.root>localhost:8080</sso.login.url.root>
 				<sso.login.url.login>/login?backurl=#domain#/sso/login</sso.login.url.login>
 				<sso.login.cookie.name>corp_sign_test</sso.login.cookie.name>
 				<sso.login.sys.key>crm_index</sso.login.sys.key>
-				<sso.login.sys.token>fdsghfd32432</sso.login.sys.token>
+				<sso.login.sys.token>fdsghfd32432fdfd</sso.login.sys.token>
 				<sso.user.signin.url>/api/sysusersadd</sso.user.signin.url>
 
 				<!-- #db config -->
@@ -407,15 +407,15 @@
 
 				<!-- master -->
 				<officebuilding.connection.url.master>jdbc:mysql://localhost:3306/demo?characterEncoding=UTF8</officebuilding.connection.url.master>
-				<officebuilding.connection.username.master>demo</officebuilding.connection.username.master>
-				<officebuilding.connection.password.master>demo!</officebuilding.connection.password.master>
+				<officebuilding.connection.username.master>root</officebuilding.connection.username.master>
+				<officebuilding.connection.password.master>123456</officebuilding.connection.password.master>
 
 				<log.level>debug</log.level>
 
 				<cookieName>demo-cookiename</cookieName>
 				<appcookieName>corp_sso_test</appcookieName>
 
-				<jspath>http://demo.com</jspath>
+				<jspath>http://mytest.uban.com:8080</jspath>
 				<session.prefix>demo_sessionid_</session.prefix>
 				<session.token>fdsafdsafe3423</session.token>
 				<static.version>0</static.version>
